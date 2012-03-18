@@ -1,7 +1,7 @@
-#import "/Users/komejun/Documents/devtool/robot4IOS/importAll.js"
+#import "../importAll.js"
 
 
-monkey(10);
+//monkey(10);
 
 function monkey(times,delay_time){
 	if (!delay_time) {
@@ -32,4 +32,28 @@ function monkey(times,delay_time){
 		target.tap({x:x_x,y:y_y});
 		target.delay(delay_time);
 	}
+}
+
+/**
+ * This is a function that randomly make vertical swipe on the screen.
+ * @returns
+ */
+function randomVerticalUpSwipe(target, duration) {
+    var x_pos = Math.random();
+    var y_start = Math.random();
+    var y_end = Math.random();
+    target.dragInsideWithOptions({startOffset:{x:x_pos, y:y_start}, endOffset:{x:x_pos, y:y_end}, duration: duration});
+    UIALogger.logMessage("Scroll from "+ x_pos + " :" + y_start + " to " + x_pos + " :" + y_end);
+}
+
+/**
+ * This is a function that randomly make horizontal swipe on the screen.
+ * @returns
+ */
+function randomHorizontalUpSwipe(target, duration) {
+    var x_start = Math.random();
+    var x_end = Math.random();
+    var y_pos = Math.random();
+    target.dragInsideWithOptions({startOffset:{x:x_start, y:y_pos}, endOffset:{x:x_end, y:y_pos}, duration: duration});
+    UIALogger.logMessage("Scroll from "+ x_start + " :" + y_pos + " to " + x_end + " :" + y_pos);
 }

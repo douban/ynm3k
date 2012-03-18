@@ -9,8 +9,6 @@ System.writeFile(reporter,"UTA name:"+ this.getUTABundleID(),"true");
 System.writeFile(reporter,"UTA version:"+ this.getUTAVersion(),"true");
 
 
-
-
 var handleCompeleteResult = function(data) {
     for (var i in data) {
 	UIALogger.logMessage("i is: " + i + " obj is " + data[i]);
