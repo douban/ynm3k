@@ -1,12 +1,16 @@
 #import "../importAll.js";
+UIALogger.logMessage("test begin");
 
 var reporter = System.createFile("testreport.txt");
-System.writeFile(reporter,"Device model:"+ this.getDeviceModel(),"true");
+System.writeFile(reporter,"Device model:"+ System.getDeviceModel(),"true");
 System.writeFile(reporter,"Screen width:"+ target.rect().size.width,"true");
 System.writeFile(reporter,"Screen height:"+ target.rect().size.height,"true");
-System.writeFile(reporter,"Decice OSVersion:"+ this.getDeviceModel(),"true");
-System.writeFile(reporter,"UTA name:"+ this.getUTABundleID(),"true");
-System.writeFile(reporter,"UTA version:"+ this.getUTAVersion(),"true");
+System.writeFile(reporter,"Decice OSVersion:"+ System.getDeviceModel(),"true");
+System.writeFile(reporter,"UTA name:"+ System.getUTABundleID(),"true");
+System.writeFile(reporter,"UTA version:"+ System.getUTAVersion(),"true");
+
+UIALogger.logMessage("test begin");
+
 
 
 var handleCompeleteResult = function(data) {
