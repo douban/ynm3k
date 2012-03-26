@@ -756,12 +756,10 @@ DOUBAN.namespace("tool.TestFormat");
  */
 DOUBAN.tool.TestFormat.JUnitXML = function(results) {
 
-
     function serializeToJUnitXML(results){
         var l = DOUBAN.util,
             xml = "",
             prop;
-            
         switch (results.type){
             //equivalent to testcase in JUnit
             case "test":
@@ -803,7 +801,7 @@ DOUBAN.tool.TestFormat.JUnitXML = function(results) {
                 xml = "<testsuites>";
             
                 for (prop in results) {
-                    if (l.hasOwnProperty(results, prop) && l.isObject(results[prop]) && !l.isArray(results[prop])){
+                    if (l.isObject(results[prop]) && !l.isArray(results[prop])){
                         xml += serializeToJUnitXML(results[prop]);
                     }
                 }
@@ -828,7 +826,7 @@ DOUBAN.tool.TestFormat.JUnitXML = function(results) {
  * @namespace DOUBAN.tool
  * @class TestReporter
  */
-DOUBAN.tool.Reporter = function(path /*:String*/, format /*:Function*/) {
+DOUBAN.tool.TestReporter = function(path /*:String*/, format /*:Function*/) {
 
     this.path = path;
 
@@ -852,7 +850,7 @@ DOUBAN.tool.TestReporter.prototype = {
      */
     report: function(results) {
         var reportText = this.format(results);
-        System.writeFile(this.path, reportText, "true");
+        System.writeFile(this.path, reportText, "false");
     }
 };
 

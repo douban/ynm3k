@@ -37,7 +37,7 @@ var DOUBAN = DOUBAN || {};
         },
         
         isArray: function(o) {
-            return OP.toString.apply(o) === ARRAY_TOSTRING;
+            return DOUBAN.consts.OP.toString.apply(o) === DOUBAN.consts.ARRAY_TOSTRING;
         },
         
         /**

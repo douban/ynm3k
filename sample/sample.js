@@ -1,35 +1,27 @@
 #import "../importAll.js";
 UIALogger.logMessage("test begin");
 
-var reporter = System.createFile("testreport.txt");
-System.writeFile(reporter,"Device model:"+ System.getDeviceModel(),"true");
-System.writeFile(reporter,"Screen width:"+ target.rect().size.width,"true");
-System.writeFile(reporter,"Screen height:"+ target.rect().size.height,"true");
-System.writeFile(reporter,"Decice OSVersion:"+ System.getDeviceModel(),"true");
-System.writeFile(reporter,"UTA name:"+ System.getUTABundleID(),"true");
-System.writeFile(reporter,"UTA version:"+ System.getUTAVersion(),"true");
 
 UIALogger.logMessage("test begin");
 
 
 
 var handleCompeleteResult = function(data) {
-    for (var i in data) {
-	UIALogger.logMessage("i is: " + i + " obj is " + data[i]);
-    }
-    UIALogger.logMessage("XXXX" + data);
+    
+    var reporter = new DOUBAN.tool.TestReporter("/Users/xiaoxiao/workspace/temp/report.xml");
+    reporter.report(data['results']);
+    UIALogger.logMessage("Comeplete");
 }
 
 var handleFailResult = function(data) {
     for (var i in data) {
         UIALogger.logMessage("i is: " + i + " obj is " + data[i]);
     }
-    UIALogger.logMessage("XXXX" + data);
 }
 
 //register for the possible events.
-DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.TEST_SUITE_COMPLETE_EVENT, handleCompeleteResult);
-DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.TEST_FAIL_EVENT, handleFailResult);
+DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.COMPLETE_EVENT, handleCompeleteResult);
+//DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.TEST_FAIL_EVENT, handleFailResult);
 
 var simpleTest = new DOUBAN.tool.TestCase({
 

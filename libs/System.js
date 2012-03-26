@@ -3,8 +3,8 @@ var System = {
 /*
 scriptPath and resultPath need to set before use it.
 */
-scriptPath: "/Users/komejun/Documents/publicgit/robot4ios/libs/",
-resultPath: "/Users/komejun/Documents/publicgit/robot4ios/",
+scriptPath: "/Users/xiaoxiao/workspace/robot4ios/libs/",
+resultPath: "/Users/xiaoxiao/workspace/robot4ios/",
 
 printSystemInfo: function(){
     var target = UIATarget.localTarget();
