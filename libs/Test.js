@@ -744,6 +744,117 @@ DOUBAN.tool.TestRunner = (function() {
 
 })();
 
+DOUBAN.namespace("tool.TestFormat");
+
+/**
+ * Returns test results formatted in JUnit XML format.
+ * @param {Object} result The results object created by TestRunner.
+ * @return {String} An XML-formatted string of results.
+ * @namespace DOUBAN.tool.TestFormat
+ * @method JUnitXML
+ * @static
+ */
+DOUBAN.tool.TestFormat.JUnitXML = function(results) {
+
+
+    function serializeToJUnitXML(results){
+        var l = DOUBAN.util,
+            xml = "",
+            prop;
+            
+        switch (results.type){
+            //equivalent to testcase in JUnit
+            case "test":
+                if (results.result != "ignore"){
+                    xml = "<testcase name=\"" + l.xmlEscape(results.name) + "\">";
+                    if (results.result == "fail"){
+                        xml += "<failure message=\"" + l.xmlEscape(results.message) + "\"><![CDATA[" + results.message + "]]></failure>";
+                    }
+                    xml+= "</testcase>";
+                }
+                break;
+                
+            //equivalent to testsuite in JUnit
+            case "testcase":
+            
+                xml = "<testsuite name=\"" + l.xmlEscape(results.name) + "\" tests=\"" + results.total + "\" failures=\"" + results.failed + "\">";
+            
+                for (prop in results) {
+                    if (l.isObject(results[prop]) && !l.isArray(results[prop])){
+                        xml += serializeToJUnitXML(results[prop]);
+                    }
+                }
+                
+                xml += "</testsuite>";
+                break;
+            
+            case "testsuite":
+                for (prop in results) {
+                    if (l.isObject(results[prop]) && !l.isArray(results[prop])){
+                        xml += serializeToJUnitXML(results[prop]);
+                    }
+                } 
+
+                //skip output - no JUnit equivalent
+                break;
+                
+            case "report":
+            
+                xml = "<testsuites>";
+            
+                for (prop in results) {
+                    if (l.hasOwnProperty(results, prop) && l.isObject(results[prop]) && !l.isArray(results[prop])){
+                        xml += serializeToJUnitXML(results[prop]);
+                    }
+                }
+                
+                xml += "</testsuites>";
+            
+            //no default
+        }
+        
+        return xml;
+ 
+    }
+
+    return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + serializeToJUnitXML(results);
+};
+/**
+ * An object capable of sending test results to a server.
+ * @param {String} path The report file path to submit the results to.
+ * @param {Function} format (Optional) A function that outputs the results in a specific format.
+ *      Default is DOUBAN.tool.TestFormat.JUnitXML.
+ * @constructor
+ * @namespace DOUBAN.tool
+ * @class TestReporter
+ */
+DOUBAN.tool.Reporter = function(path /*:String*/, format /*:Function*/) {
+
+    this.path = path;
+
+    this.format = format || DOUBAN.tool.TestFormat.JUnitXML;
+};
+
+/**
+ * Sends the report to the server.
+ * @param {Object} results The results object created by TestRunner.
+ * @return {Void}
+ * @method report
+ */
+
+DOUBAN.tool.TestReporter.prototype = {
+
+    /**
+     * Sends the report to the server.
+     * @param {Object} results The results object created by TestRunner.
+     * @return {Void}
+     * @method report
+     */
+    report: function(results) {
+        var reportText = this.format(results);
+        System.writeFile(this.path, reportText, "true");
+    }
+};
 
 function test(title, resultPath,tests) {
     

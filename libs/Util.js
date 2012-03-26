@@ -19,7 +19,8 @@ var DOUBAN = DOUBAN || {};
 
     DOUBAN.consts.OP = Object.prototype;
     DOUBAN.consts.FUNCTION_TOSTRING = '[object Function]';
-
+    DOUBAN.consts.ARRAY_TOSTRING = '[object Array]';
+    
     DOUBAN.namespace('util');
     
     DOUBAN.util = {
@@ -33,6 +34,28 @@ var DOUBAN = DOUBAN || {};
         
         isString: function(o) {
             return typeof o === 'string';
+        },
+        
+        isArray: function(o) {
+            return OP.toString.apply(o) === ARRAY_TOSTRING;
+        },
+        
+        /**
+         * (intentionally not documented)
+         * Simple escape function for XML attribute values.
+         * @param {String} text The text to escape.
+         * @return {String} The escaped text.
+         */
+        xmlEscape: function(text){
+            return text.replace(/["'<>&]/g, function(c){
+                switch(c){
+                    case "<":   return "&lt;";
+                    case ">":   return "&gt;";
+                    case "\"":  return "&quot;";
+                    case "'":   return "&apos;";
+                    case "&":   return "&amp;";
+                }
+            });
         },
         
         /**
