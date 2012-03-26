@@ -3,5 +3,8 @@
 var target = UIATarget.localTarget(); 
 var appWindow = target.frontMostApp().mainWindow();
 
-randomVerticalUpSwipe(appWindow, 10);
-randomHorizontalUpSwipe(appWindow, 10);
+randomHorizontalLeftToRight();
+randomHorizontalRightToLeft();
+
+randomVerticalDownToUp();
+randomVerticalUpToDown();

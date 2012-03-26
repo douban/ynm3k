@@ -35,25 +35,81 @@ function monkey(times,delay_time){
 }
 
 /**
- * This is a function that randomly make vertical swipe on the screen.
+ * This is a function that randomly make vertical swipe from up to down on the screen.
  * @returns
  */
-function randomVerticalUpSwipe(target, duration) {
-    var x_pos = Math.random();
-    var y_start = Math.random();
-    var y_end = Math.random();
-    target.dragInsideWithOptions({startOffset:{x:x_pos, y:y_start}, endOffset:{x:x_pos, y:y_end}, duration: duration});
-    UIALogger.logMessage("Scroll from "+ x_pos + " :" + y_start + " to " + x_pos + " :" + y_end);
+function randomVerticalUpToDown() {
+    var target = UIATarget.localTarget(); 
+    var appWindow = target.frontMostApp().mainWindow();
+
+    var appwidth = appWindow.contentArea().size.width;
+    var appheight = appWindow.contentArea().size.height;
+
+    var width_times = appwidth / 20;
+    var height_times = appheight / 20;
+
+    var x_pos = Math.floor(Math.random() * width_times) * 20;
+    var y_start = Math.floor(Math.random() * height_times) * 10;
+    var y_end = Math.floor(Math.random() * height_times) * 10 + height_times * 10;
+    target.flickFromTo({x:x_pos, y:y_start},{x:x_pos, y:y_end});
 }
 
 /**
- * This is a function that randomly make horizontal swipe on the screen.
+ * This is a function that randomly make vertical swipe from up to down on the screen.
  * @returns
  */
-function randomHorizontalUpSwipe(target, duration) {
-    var x_start = Math.random();
-    var x_end = Math.random();
-    var y_pos = Math.random();
-    target.dragInsideWithOptions({startOffset:{x:x_start, y:y_pos}, endOffset:{x:x_end, y:y_pos}, duration: duration});
-    UIALogger.logMessage("Scroll from "+ x_start + " :" + y_pos + " to " + x_end + " :" + y_pos);
+function randomVerticalDownToUp() {
+    var target = UIATarget.localTarget(); 
+    var appWindow = target.frontMostApp().mainWindow();
+
+    var appwidth = appWindow.contentArea().size.width;
+    var appheight = appWindow.contentArea().size.height;
+
+    var width_times = appwidth / 20;
+    var height_times = appheight / 20;
+
+    var x_pos = Math.floor(Math.random() * width_times) * 20;
+    var y_start = Math.floor(Math.random() * height_times) * 10 + height_times * 10;
+    var y_end = Math.floor(Math.random() * height_times) * 10;
+    target.flickFromTo({x:x_pos, y:y_start},{x:x_pos, y:y_end});
+}
+
+/**
+ * This is a function that randomly make horizontal swipe from left to right on the screen.
+ * @returns
+ */
+function randomHorizontalLeftToRight() {
+    var target = UIATarget.localTarget(); 
+    var appWindow = target.frontMostApp().mainWindow();
+
+    var appwidth = appWindow.contentArea().size.width;
+    var appheight = appWindow.contentArea().size.height;
+
+    var width_times = appwidth / 20;
+    var height_times = appheight / 20;
+
+    var y_pos = Math.floor(Math.random() * height_times) * 20;
+    var x_start = Math.floor(Math.random() * width_times) * 10;
+    var x_end = Math.floor(Math.random() * width_times) * 10 + width_times * 10;
+    target.flickFromTo({x:x_start, y:y_pos},{x:x_end, y:y_pos});
+}
+
+/**
+ * This is a function that randomly make horizontal swipe from right to left on the screen.
+ * @returns
+ */
+function randomHorizontalRightToLeft() {
+    var target = UIATarget.localTarget(); 
+    var appWindow = target.frontMostApp().mainWindow();
+
+    var appwidth = appWindow.contentArea().size.width;
+    var appheight = appWindow.contentArea().size.height;
+
+    var width_times = appwidth / 20;
+    var height_times = appheight / 20;
+
+    var y_pos = Math.floor(Math.random() * height_times) * 20;
+    var x_start = Math.floor(Math.random() * width_times) * 10 + width_times * 10;
+    var x_end = Math.floor(Math.random() * width_times) * 10;
+    target.flickFromTo({x:x_start, y:y_pos},{x:x_end, y:y_pos});
 }
