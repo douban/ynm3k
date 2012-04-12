@@ -3,8 +3,8 @@ var System = {
 /*
 scriptPath and resultPath need to set before use it.
 */
-scriptPath: "/Users/xiaoxiao/workspace/robot4ios/libs/",
-resultPath: "/Users/xiaoxiao/workspace/robot4ios/",
+scriptPath: "/Users/komejun/Documents/publicgit/robot4ios/libs/",
+resultPath: "/Users/komejun/Documents/publicgit/report/",
 
 printSystemInfo: function(){
     var target = UIATarget.localTarget();
@@ -51,7 +51,7 @@ getUTABundleID: function(){
 createFile: function(endName){
     var target = UIATarget.localTarget(); 
     var host = target.host();
-    var str = this.resultPath+new Date().getTime()+endName;
+    var str = this.resultPath+endName;
     //UIALogger.logMessage("test begin:"+str);
     var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"touchtest.sh", [str], 5);
     if(result.exitCode==0){
