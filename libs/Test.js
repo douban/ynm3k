@@ -573,10 +573,12 @@ DOUBAN.tool.TestRunner = (function() {
           //fireEvent appropriate event
             if (failed) {
                 this.fireEvent(this.TEST_FAIL_EVENT, { testCase: testCase, testName: testName, error: error });
-                UIALogger.logFail(error);
+                UIALogger.logFail(testName + " has failed and error is: " + error);
             } else {
                 this.fireEvent(this.TEST_PASS_EVENT, { testCase: testCase, testName: testName });
+                UIALogger.logPass(testName + " has passed...");
             }
+
             
             //run the tear down
             testCase.tearDown();
