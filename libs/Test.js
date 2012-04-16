@@ -573,6 +573,7 @@ DOUBAN.tool.TestRunner = (function() {
           //fireEvent appropriate event
             if (failed) {
                 this.fireEvent(this.TEST_FAIL_EVENT, { testCase: testCase, testName: testName, error: error });
+                UIALogger.logFail(error);
             } else {
                 this.fireEvent(this.TEST_PASS_EVENT, { testCase: testCase, testName: testName });
             }
