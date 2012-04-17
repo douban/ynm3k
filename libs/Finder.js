@@ -4,7 +4,7 @@ var Finder = {
 findElement_By_name: function(name, parent){
     var start = (new Date()).getTime();	
 	if (!parent) {
-		parent = UIATarget.localTarget().frontMostApp().mainWindow();
+		parent = UIATarget.localTarget().frontMostApp();
 	}
         var timeout = UIATarget.localTarget().timeout();
 	var result;
@@ -23,14 +23,14 @@ findElement_By_name: function(name, parent){
 findElement_By_value: function(value, parent){
     var start = (new Date()).getTime();	
 	if (!parent) {
-		parent = UIATarget.localTarget().frontMostApp().mainWindow();
+		parent = UIATarget.localTarget().frontMostApp();
 	}
         var timeout = UIATarget.localTarget().timeout();
 	var result;
 	while (((new Date()).getTime() - start) < (timeout * 1000) || timeout == 0) {
 		result = this._searchElements(parent, value, "value");
 		if (!this.isNil(result)) {
-                    //UIATarget.localTarget().delay(0.5); 
+                    UIATarget.localTarget().delay(0.5); 
 		   return result;		   
 		}
 	}
@@ -48,6 +48,7 @@ _searchElements: function(elem, value, key) {
 		UIATarget.localTarget().pushTimeout(0);		
 		var result = elem.withValueForKey(value, key);
 		if (!this.isNil(result)) {
+                    
 			return result;
 		}		
 		
