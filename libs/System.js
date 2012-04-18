@@ -3,7 +3,7 @@ var System = {
 /*
 scriptPath and resultPath need to set before use it.
 */
-scriptPath: "/Users/komejun/Documents/publicgit/robot4ios/libs/",
+scriptPath: "./libs/",
 resultPath: "/Users/komejun/Documents/publicgit/report/",
 
 printSystemInfo: function(){
@@ -23,6 +23,10 @@ setResultPath: function(path){
 },
 
 getResultPath: function(){
+    return this.resultPath;
+},
+
+getScriptPath: function(){
     return this.resultPath;
 },
 
