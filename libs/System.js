@@ -4,7 +4,7 @@ var System = {
 scriptPath and resultPath need to set before use it.
 */
 scriptPath: "/Users/komejun/Documents/publicgit/robot4ios/libs/",
-resultPath: "/Users/komejun/Documents/publicgit/report/",
+//resultPath: "/Users/komejun/Documents/publicgit/report/",
 
 printSystemInfo: function(){
     var target = UIATarget.localTarget();
@@ -17,18 +17,6 @@ printSystemInfo: function(){
     UIALogger.logMessage("UTA name:"+ this.getUTABundleID());
     UIALogger.logMessage("UTA version:"+ this.getUTAVersion());
     },
-    
-setResultPath: function(path){
-    this.resultPath = path;
-},
-
-getResultPath: function(){
-    return this.resultPath;
-},
-
-getScriptPath: function(){
-    return this.resultPath;
-},
 
 getDeviceModel: function(){
     var target = UIATarget.localTarget();
@@ -51,7 +39,7 @@ getUTABundleID: function(){
     var app = target.frontMostApp();
     return app.bundleID();
     },
-
+/*
 createFile: function(endName){
     var target = UIATarget.localTarget(); 
     var host = target.host();
@@ -65,7 +53,7 @@ createFile: function(endName){
             }
     },
     
-
+*/
 writeFile: function(filename, message,flag){
     var target = UIATarget.localTarget(); 
     var host = target.host();
