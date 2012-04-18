@@ -10,7 +10,6 @@ System.writeFile(reporter,"UTA name:"+ System.getUTABundleID(),"true");
 System.writeFile(reporter,"UTA version:"+ System.getUTAVersion(),"true");
 */
 
-
 var handleCompeleteResult = function(testresults) {
     var reportfile = System.createFile("testreport.txt");
     var reporter = new DOUBAN.tool.TestReporter(reportfile);
@@ -25,7 +24,7 @@ var handleFailResult = function(data) {
 }
 
 DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.COMPLETE_EVENT, handleCompeleteResult);
-DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.TEST_FAIL_EVENT, handleFailResult);
+//DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.TEST_FAIL_EVENT, handleFailResult);
 
 var simpleTest = new DOUBAN.tool.TestCase({
 
@@ -82,6 +81,11 @@ testSuite.add(new DOUBAN.tool.TestCase({
     },
 
     testSomething : function() {
+		var d = new Date();
+		UIALogger.logMessage("test"+d.getTime());
+		Waiter.wait(3);
+		var e = new Date();
+		UIALogger.logMessage("test"+e.getTime());
         UIALogger.logMessage("SuiteComplicatedTest");
     },
     testAnotherthing : function() {
