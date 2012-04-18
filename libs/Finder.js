@@ -1,4 +1,3 @@
-#import "Assert.js"
 var Finder = {
     
 findElement_By_name: function(name, parent){
