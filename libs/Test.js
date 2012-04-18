@@ -726,7 +726,10 @@ DOUBAN.tool.TestRunner = (function() {
         run : function (oldMode) {
             
             //Check if the iOS version is greater than 5.
-            if (getDeviceVersion < 5) {
+            var version = System.getDeviceVersion();
+            var mainVersion = version.split(".");
+
+            if (mainVersion[0] < 5) {
                 UIALogger.logFail("The ynm3k cannot run on ios which version is less than 5");
                 return;
             }
@@ -862,23 +865,3 @@ DOUBAN.tool.TestReporter.prototype = {
         System.writeFile(this.path, reportText, "false");
     }
 };
-
-function test(title, resultPath,tests) {
-    
-  var str = System.getDeviceVersion();
-  var arr = str.split(".");
-  try {
-    tests();
-    var result = title+"is finished no error";
-    if(arr[0]>4){
-    System.writeFile(resultPath,result,"true"); 
-    }
-    UIALogger.logPass(result);
-    }catch (e) {
-    var result = title+"is failed!!"+"and the failed message is "+e;
-    if(arr[0]>4){
-    System.writeFile(resultPath,result,"true"); 
-    }
-    UIALogger.logFail(result);
-  }
-}

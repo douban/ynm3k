@@ -3,7 +3,7 @@ var System = {
 /*
 scriptPath and resultPath need to set before use it.
 */
-scriptPath: "./libs/",
+scriptPath: "/Users/komejun/Documents/publicgit/robot4ios/libs/",
 resultPath: "/Users/komejun/Documents/publicgit/report/",
 
 printSystemInfo: function(){
