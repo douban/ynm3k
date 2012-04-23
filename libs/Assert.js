@@ -10,7 +10,12 @@ var Assert = {
     },
     
     _getComparisonFailureMessage : function(message,expected,actual){
-        return message + "    Expected: " + expected +"Actual: " + actual;
+        if(expected ==""){
+            return message  +"   Actual: " + actual;        
+            }else{
+            return message + "    Expected: " + expected +"    Actual: " + actual;
+        }
+        
     },
     
     fail: function(message){
@@ -33,5 +38,47 @@ var Assert = {
         if (expected != actual) {
             throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Values should be equal."), expected, actual);
         }
-    }
+    },
+    
+    areNotEqual: function (expected, actual ,message){
+        if(expected == actual){
+                throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Values should not equal."), expected, actual);
+            }
+    },
+    
+    isFalse : function (actual, message) {
+        if (false !== actual) {
+            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Value should be false."), false, actual);
+        }
+    },
+    
+    isTrue : function (actual, message) {
+        if (true !== actual) {
+            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Value should be false."), true, actual);
+        }
+    },
+    isNaN : function (actual, message){
+        if (!isNaN(actual)){
+            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Value should be NaN."), NaN, actual);
+        }    
+    },
+    
+    isNotNaN : function (actual, message){
+        if (isNaN(actual)){
+            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Value should  NaN."), NaN, actual);
+        }    
+    },
+    
+    isNumber : function (actual, message) {
+        if (typeof actual != "number"){
+            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Value should be a number."),"", actual);
+        }    
+    },  
+    
+    isObject : function (actual, message) {
+        if (!actual || (typeof actual != "object" && typeof actual != "function")){
+            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Value should be an object."),"", actual);
+        }
+    },
+    
 }
