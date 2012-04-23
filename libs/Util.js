@@ -1,13 +1,13 @@
-var DOUBAN = DOUBAN || {};
+var DYUI = DYUI || {};
 
 (function() {
-    DOUBAN.namespace = function() {
+    DYUI.namespace = function() {
         var a = arguments, o = null, i, j, d;
         for (i = 0; i < a.length; i = i + 1) {
             d = ("" + a[i]).split(".");
-            o = DOUBAN;
+            o = DYUI;
     
-            for (j = (d[0] == "DOUBAN") ? 1 : 0; j < d.length; j = j + 1) {
+            for (j = (d[0] == "DYUI") ? 1 : 0; j < d.length; j = j + 1) {
                 o[d[j]] = o[d[j]] || {};
                 o = o[d[j]];
             }
@@ -15,21 +15,21 @@ var DOUBAN = DOUBAN || {};
         return o;
     };
     
-    DOUBAN.namespace('consts');
+    DYUI.namespace('consts');
 
-    DOUBAN.consts.OP = Object.prototype;
-    DOUBAN.consts.FUNCTION_TOSTRING = '[object Function]';
-    DOUBAN.consts.ARRAY_TOSTRING = '[object Array]';
+    DYUI.consts.OP = Object.prototype;
+    DYUI.consts.FUNCTION_TOSTRING = '[object Function]';
+    DYUI.consts.ARRAY_TOSTRING = '[object Array]';
     
-    DOUBAN.namespace('util');
+    DYUI.namespace('util');
     
-    DOUBAN.util = {
+    DYUI.util = {
         isFunction: function(o) {
-            return (typeof o === 'function') || DOUBAN.consts.OP.toString.apply(o) === DOUBAN.consts.FUNCTION_TOSTRING;
+            return (typeof o === 'function') || DYUI.consts.OP.toString.apply(o) === DYUI.consts.FUNCTION_TOSTRING;
         },
         
         isObject: function(o) {
-            return (o && (typeof o === 'object' || DOUBAN.util.isFunction(o))) || false;
+            return (o && (typeof o === 'object' || DYUI.util.isFunction(o))) || false;
         },
         
         isString: function(o) {
@@ -37,7 +37,7 @@ var DOUBAN = DOUBAN || {};
         },
         
         isArray: function(o) {
-            return DOUBAN.consts.OP.toString.apply(o) === DOUBAN.consts.ARRAY_TOSTRING;
+            return DYUI.consts.OP.toString.apply(o) === DYUI.consts.ARRAY_TOSTRING;
         },
         
         /**
@@ -82,7 +82,7 @@ var DOUBAN = DOUBAN || {};
             subc.prototype=new F();
             subc.prototype.constructor=subc;
             subc.superclass=superc.prototype;
-            if (superc.prototype.constructor == DOUBAN.consts.OP.constructor) {
+            if (superc.prototype.constructor == DYUI.consts.OP.constructor) {
                 superc.prototype.constructor = superc;
             }
 
@@ -96,25 +96,25 @@ var DOUBAN = DOUBAN || {};
 })();
 
 
-DOUBAN.namespace('event');
+DYUI.namespace('event');
 
-DOUBAN.event.Event = function(name) {
+DYUI.event.Event = function(name) {
 
     this.name = name;
 
     return this;
 };
 
-DOUBAN.event.Event.prototype = {
+DYUI.event.Event.prototype = {
     
 };
 
-DOUBAN.event.EventProvider = function() {
+DYUI.event.EventProvider = function() {
     
 };
 
 
-DOUBAN.event.EventProvider.prototype = {
+DYUI.event.EventProvider.prototype = {
     __douban_events : null,
     
     __douban_subscribers : null,
@@ -141,7 +141,7 @@ DOUBAN.event.EventProvider.prototype = {
      */
     createEvent : function(event) {
         this.__douban_events = this.__douban_events || {};
-        this.__douban_events[event] = new DOUBAN.event.Event(event);
+        this.__douban_events[event] = new DYUI.event.Event(event);
     },
     
     /**

@@ -1,11 +1,11 @@
 #import "System.js"
 #import "Util.js"
 
-var DOUBAN = DOUBAN || {}
+var DYUI = DYUI || {}
 
-DOUBAN.namespace("tool");
+DYUI.namespace("tool");
 
-DOUBAN.tool.TestCase = function(template) {
+DYUI.tool.TestCase = function(template) {
 
     this._should /*:Object*/ = {};
 
@@ -14,7 +14,7 @@ DOUBAN.tool.TestCase = function(template) {
     }
 };
 
-DOUBAN.tool.TestCase.prototype = {
+DYUI.tool.TestCase.prototype = {
     
     /**
      * Function to run before each test is executed.
@@ -34,7 +34,7 @@ DOUBAN.tool.TestCase.prototype = {
 };
 
 
-DOUBAN.tool.TestSuite = function(data) {
+DYUI.tool.TestSuite = function(data) {
     /**
      * The name of the test suite.
      * @type String
@@ -50,15 +50,15 @@ DOUBAN.tool.TestSuite = function(data) {
 
 };
 
-DOUBAN.tool.TestSuite.prototype = {
+DYUI.tool.TestSuite.prototype = {
     /**
      * Adds a test suite or test case to the test suite.
-     * @param {DOUBAN.tool.TestSuite||DOUBAN.tool.TestCase} testObject The test suite or test case to add.
+     * @param {DYUI.tool.TestSuite||DYUI.tool.TestCase} testObject The test suite or test case to add.
      * @return {Void}
      * @method add
      */
-    add : function (testObject /*:DOUBAN.tool.TestSuite*/) /*:Void*/ {
-        if (testObject instanceof DOUBAN.tool.TestSuite || testObject instanceof DOUBAN.tool.TestCase) {
+    add : function (testObject /*:DYUI.tool.TestSuite*/) /*:Void*/ {
+        if (testObject instanceof DYUI.tool.TestSuite || testObject instanceof DYUI.tool.TestCase) {
             this.items.push(testObject);
         }
     },
@@ -84,7 +84,7 @@ DOUBAN.tool.TestSuite.prototype = {
     }
 };
 
-DOUBAN.tool.TestRunner = (function() {
+DYUI.tool.TestRunner = (function() {
 
     /**
      * A node in the test tree structure. May represent a TestSuite, TestCase, or
@@ -145,10 +145,10 @@ DOUBAN.tool.TestRunner = (function() {
         };
         
         //initialize results
-        if (testObject instanceof DOUBAN.tool.TestSuite){
+        if (testObject instanceof DYUI.tool.TestSuite){
             this.results.type = "testsuite";
             this.results.name = testObject.name;
-        } else if (testObject instanceof DOUBAN.tool.TestCase){
+        } else if (testObject instanceof DYUI.tool.TestCase){
             this.results.type = "testcase";
             this.results.name = testObject.name;
         }
@@ -179,7 +179,7 @@ DOUBAN.tool.TestRunner = (function() {
     /**
      * Runs test suites and test cases, providing events to allowing for the
      * interpretation of test results.
-     * @namespace DOUBAN.tool
+     * @namespace DYUI.tool
      * @class TestRunner
      * @static
      */
@@ -187,12 +187,12 @@ DOUBAN.tool.TestRunner = (function() {
     
         /**
          * Suite on which to attach all TestSuites and TestCases to be run.
-         * @type DOUBAN.tool.TestSuite
+         * @type DYUI.tool.TestSuite
          * @property masterSuite
          * @private
          * @static
          */
-        this.masterSuite = new DOUBAN.tool.TestSuite("douban_ios_test" + (new Date()).getTime());
+        this.masterSuite = new DYUI.tool.TestSuite("douban_ios_test" + (new Date()).getTime());
 
         /**
          * Pointer to the current node in the test tree.
@@ -249,7 +249,7 @@ DOUBAN.tool.TestRunner = (function() {
         }
     };
 
-    DOUBAN.util.extend(TestRunner, DOUBAN.event.EventProvider, {
+    DYUI.util.extend(TestRunner, DYUI.event.EventProvider, {
         /**
          * Fires when a test case is opened but before the first 
          * test is executed.
@@ -338,19 +338,19 @@ DOUBAN.tool.TestRunner = (function() {
         /**
          * Adds a test case to the test tree as a child of the specified node.
          * @param {TestNode} parentNode The node to add the test case to as a child.
-         * @param {DOUBAN.tool.TestCase} testCase The test case to add.
+         * @param {DYUI.tool.TestCase} testCase The test case to add.
          * @return {Void}
          * @static
          * @private
          * @method _addTestCaseToTestTree
          */
-        _addTestCaseToTestTree : function (parentNode /*:TestNode*/, testCase /*:DOUBAN.tool.TestCase*/) /*:Void*/{
+        _addTestCaseToTestTree : function (parentNode /*:TestNode*/, testCase /*:DYUI.tool.TestCase*/) /*:Void*/{
             //add the test suite
             var node = parentNode.appendChild(testCase);
             
             //iterate over the items in the test case
             for (var prop in testCase){
-                if (prop.indexOf("test") === 0 && DOUBAN.util.isFunction(testCase[prop])){
+                if (prop.indexOf("test") === 0 && DYUI.util.isFunction(testCase[prop])){
                     node.appendChild(prop);
                 }
             }
@@ -360,22 +360,22 @@ DOUBAN.tool.TestRunner = (function() {
         /**
          * Adds a test suite to the test tree as a child of the specified node.
          * @param {TestNode} parentNode The node to add the test suite to as a child.
-         * @param {DOUBAN.tool.TestSuite} testSuite The test suite to add.
+         * @param {DYUI.tool.TestSuite} testSuite The test suite to add.
          * @return {Void}
          * @static
          * @private
          * @method _addTestSuiteToTestTree
          */
-        _addTestSuiteToTestTree : function (parentNode /*:TestNode*/, testSuite /*:DOUBAN.tool.TestSuite*/) /*:Void*/ {
+        _addTestSuiteToTestTree : function (parentNode /*:TestNode*/, testSuite /*:DYUI.tool.TestSuite*/) /*:Void*/ {
             
             //add the test suite
             var node = parentNode.appendChild(testSuite);
             
             //iterate over the items in the master suite
             for (var i=0; i < testSuite.items.length; i++){
-                if (testSuite.items[i] instanceof DOUBAN.tool.TestSuite) {
+                if (testSuite.items[i] instanceof DYUI.tool.TestSuite) {
                     this._addTestSuiteToTestTree(node, testSuite.items[i]);
-                } else if (testSuite.items[i] instanceof DOUBAN.tool.TestCase) {
+                } else if (testSuite.items[i] instanceof DYUI.tool.TestCase) {
                     this._addTestCaseToTestTree(node, testSuite.items[i]);
                 }
             }
@@ -396,9 +396,9 @@ DOUBAN.tool.TestRunner = (function() {
             
             //iterate over the items in the master suite
             for (var i=0; i < this.masterSuite.items.length; i++){
-                if (this.masterSuite.items[i] instanceof DOUBAN.tool.TestSuite) {
+                if (this.masterSuite.items[i] instanceof DYUI.tool.TestSuite) {
                     this._addTestSuiteToTestTree(this._root, this.masterSuite.items[i]);
-                } else if (this.masterSuite.items[i] instanceof DOUBAN.tool.TestCase) {
+                } else if (this.masterSuite.items[i] instanceof DYUI.tool.TestCase) {
                     this._addTestCaseToTestTree(this._root, this.masterSuite.items[i]);
                 }
             }
@@ -416,7 +416,7 @@ DOUBAN.tool.TestRunner = (function() {
          */
         getResults : function(format){
             if (!this._running && this._lastResults) {
-                if (DOUBAN.util.isFunction(format)) {
+                if (DYUI.util.isFunction(format)) {
                     return format(this._lastResults);
                 } else {
                     return this._lastResults;
@@ -436,18 +436,18 @@ DOUBAN.tool.TestRunner = (function() {
          * @static
          */
         _handleTestObjectComplete : function (node /*:TestNode*/) /*:Void*/ {
-            if (DOUBAN.util.isObject(node.testObject)){
+            if (DYUI.util.isObject(node.testObject)){
                 node.parent.results.passed += node.results.passed;
                 node.parent.results.failed += node.results.failed;
                 node.parent.results.total += node.results.total;
                 node.parent.results.ignored += node.results.ignored;
                 node.parent.results[node.testObject.name] = node.results;
             
-                if (node.testObject instanceof DOUBAN.tool.TestSuite){
+                if (node.testObject instanceof DYUI.tool.TestSuite){
                     node.testObject.tearDown();
                     node.results.duration = (new Date()) - node._start;
                     this.fireEvent(this.TEST_SUITE_COMPLETE_EVENT, { testSuite: node.testObject, results: node.results});
-                } else if (node.testObject instanceof DOUBAN.tool.TestCase){
+                } else if (node.testObject instanceof DYUI.tool.TestCase){
                     node.results.duration = (new Date()) - node._start;
                     this.fireEvent(this.TEST_CASE_COMPLETE_EVENT, { testCase: node.testObject, results: node.results});
                 }
@@ -497,7 +497,7 @@ DOUBAN.tool.TestRunner = (function() {
 
         /**
          * Runs a test case or test suite, returning the results.
-         * @param {DOUBAN.tool.TestCase|DOUBAN.tool.TestSuite} testObject The test case or test suite to run.
+         * @param {DYUI.tool.TestCase|DYUI.tool.TestSuite} testObject The test case or test suite to run.
          * @return {Object} Results of the execution with properties passed, failed, and total.
          * @private
          * @method _run
@@ -523,12 +523,12 @@ DOUBAN.tool.TestRunner = (function() {
                 var testObject = node.testObject;
                 
                 //figure out what to do
-                if (DOUBAN.util.isObject(testObject)){
-                    if (testObject instanceof DOUBAN.tool.TestSuite){
+                if (DYUI.util.isObject(testObject)){
+                    if (testObject instanceof DYUI.tool.TestSuite){
                         this.fireEvent(this.TEST_SUITE_BEGIN_EVENT, { testSuite: testObject });
                         node._start = new Date();
                         testObject.setUp();
-                    } else if (testObject instanceof DOUBAN.tool.TestCase){
+                    } else if (testObject instanceof DYUI.tool.TestCase){
                         this.fireEvent(this.TEST_CASE_BEGIN_EVENT, { testCase: testObject });
                         node._start = new Date();
                     }
@@ -536,7 +536,7 @@ DOUBAN.tool.TestRunner = (function() {
                     //some environments don't support setTimeout
                     if (typeof setTimeout != "undefined"){                    
                         setTimeout(function(){
-                            DOUBAN.tool.TestRunner._run();
+                            DYUI.tool.TestRunner._run();
                         }, 0);
                     } else {
                         this._run();
@@ -553,7 +553,7 @@ DOUBAN.tool.TestRunner = (function() {
             //get relevant information
             var node /*:TestNode*/ = this._cur;
             var testName /*:String*/ = node.testObject;
-            var testCase /*:DOUBAN.tool.TestCase*/ = node.parent.testObject;
+            var testCase /*:DYUI.tool.TestCase*/ = node.parent.testObject;
             
             //variable to hold whether or not the test failed
             var failed /*:Boolean*/ = false;
@@ -605,7 +605,7 @@ DOUBAN.tool.TestRunner = (function() {
             //set timeout not supported in all environments
             if (typeof setTimeout != "undefined"){
                 setTimeout(function(){
-                    DOUBAN.tool.TestRunner._run();
+                    DYUI.tool.TestRunner._run();
                 }, 0);
             } else {
                 this._run();
@@ -625,7 +625,7 @@ DOUBAN.tool.TestRunner = (function() {
         
             //get relevant information
             var testName /*:String*/ = node.testObject;
-            var testCase /*:DOUBAN.tool.TestCase*/ = node.parent.testObject;
+            var testCase /*:DYUI.tool.TestCase*/ = node.parent.testObject;
             var test /*:Function*/ = testCase[testName];
             
             //get the "should" test cases
@@ -650,7 +650,7 @@ DOUBAN.tool.TestRunner = (function() {
                 //some environments don't support setTimeout
                 if (typeof setTimeout != "undefined"){
                     setTimeout(function(){
-                        DOUBAN.tool.TestRunner._run();
+                        DYUI.tool.TestRunner._run();
                     }, 0);              
                 } else {
                     this._run();
@@ -712,7 +712,7 @@ DOUBAN.tool.TestRunner = (function() {
          * @static
          */
         clear : function () /*:Void*/ {
-            this.masterSuite = new DOUBAN.tool.TestSuite("douban_ios_tests" + (new Date()).getTime());
+            this.masterSuite = new DYUI.tool.TestSuite("douban_ios_tests" + (new Date()).getTime());
         },
 
         /**
@@ -735,10 +735,10 @@ DOUBAN.tool.TestRunner = (function() {
             }
             
             //pointer to runner to avoid scope issues 
-            var runner = DOUBAN.tool.TestRunner;
+            var runner = DYUI.tool.TestRunner;
             
             //if there's only one suite on the masterSuite, move it up
-            if (!oldMode && this.masterSuite.items.length == 1 && this.masterSuite.items[0] instanceof DOUBAN.tool.TestSuite){
+            if (!oldMode && this.masterSuite.items.length == 1 && this.masterSuite.items[0] instanceof DYUI.tool.TestSuite){
                 this.masterSuite = this.masterSuite.items[0];
             }
 
@@ -756,20 +756,20 @@ DOUBAN.tool.TestRunner = (function() {
 
 })();
 
-DOUBAN.namespace("tool.TestFormat");
+DYUI.namespace("tool.TestFormat");
 
 /**
  * Returns test results formatted in JUnit XML format.
  * @param {Object} result The results object created by TestRunner.
  * @return {String} An XML-formatted string of results.
- * @namespace DOUBAN.tool.TestFormat
+ * @namespace DYUI.tool.TestFormat
  * @method JUnitXML
  * @static
  */
-DOUBAN.tool.TestFormat.JUnitXML = function(results) {
+DYUI.tool.TestFormat.JUnitXML = function(results) {
 
     function serializeToJUnitXML(results){
-        var l = DOUBAN.util,
+        var l = DYUI.util,
             xml = "",
             prop;
         switch (results.type){
@@ -833,16 +833,16 @@ DOUBAN.tool.TestFormat.JUnitXML = function(results) {
  * An object capable of sending test results to a server.
  * @param {String} path The report file path to submit the results to.
  * @param {Function} format (Optional) A function that outputs the results in a specific format.
- *      Default is DOUBAN.tool.TestFormat.JUnitXML.
+ *      Default is DYUI.tool.TestFormat.JUnitXML.
  * @constructor
- * @namespace DOUBAN.tool
+ * @namespace DYUI.tool
  * @class TestReporter
  */
-DOUBAN.tool.TestReporter = function(path /*:String*/, format /*:Function*/) {
+DYUI.tool.TestReporter = function(path /*:String*/, format /*:Function*/) {
 
     this.path = path;
 
-    this.format = format || DOUBAN.tool.TestFormat.JUnitXML;
+    this.format = format || DYUI.tool.TestFormat.JUnitXML;
 };
 
 /**
@@ -852,7 +852,7 @@ DOUBAN.tool.TestReporter = function(path /*:String*/, format /*:Function*/) {
  * @method report
  */
 
-DOUBAN.tool.TestReporter.prototype = {
+DYUI.tool.TestReporter.prototype = {
 
     /**
      * Sends the report to the server.

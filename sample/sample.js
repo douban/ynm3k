@@ -12,7 +12,7 @@ System.writeFile(reporter,"UTA version:"+ System.getUTAVersion(),"true");
 
 var handleCompeleteResult = function(testresults) {
     
-    var reporter = new DOUBAN.tool.TestReporter("/Users/komejun/Documents/publicgit/report/testreport.xml");
+    var reporter = new DOUBAN.tool.TestReporter("/Users/xiaoxiao/workspace/temp/testreport.xml");
     reporter.report(testresults['results']);
     UIALogger.logMessage("Comeplete");
 }
