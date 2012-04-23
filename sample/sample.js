@@ -12,7 +12,7 @@ System.writeFile(reporter,"UTA version:"+ System.getUTAVersion(),"true");
 
 var handleCompeleteResult = function(testresults) {
     
-    var reporter = new DOUBAN.tool.TestReporter("/Users/xiaoxiao/workspace/temp/testreport.xml");
+    var reporter = new DYUI.tool.TestReporter("/Users/xiaoxiao/workspace/temp/testreport.xml");
     reporter.report(testresults['results']);
     UIALogger.logMessage("Comeplete");
 }
@@ -23,10 +23,10 @@ var handleFailResult = function(data) {
     }
 }
 
-DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.COMPLETE_EVENT, handleCompeleteResult);
-//DOUBAN.tool.TestRunner.subscribe(DOUBAN.tool.TestRunner.TEST_FAIL_EVENT, handleFailResult);
+DYUI.tool.TestRunner.subscribe(DYUI.tool.TestRunner.COMPLETE_EVENT, handleCompeleteResult);
+//DYUI.tool.TestRunner.subscribe(DYUI.tool.TestRunner.TEST_FAIL_EVENT, handleFailResult);
 
-var simpleTest = new DOUBAN.tool.TestCase({
+var simpleTest = new DYUI.tool.TestCase({
 
     name : 'simpleTest',
 
@@ -53,7 +53,7 @@ var simpleTest = new DOUBAN.tool.TestCase({
 });
 
 
-var anotherSimpleTest = new DOUBAN.tool.TestCase({
+var anotherSimpleTest = new DYUI.tool.TestCase({
 
     name : 'anotherSimpleTest',
 
@@ -71,8 +71,8 @@ var anotherSimpleTest = new DOUBAN.tool.TestCase({
 });
 
 
-var testSuite = new DOUBAN.tool.TestSuite("TestSuite Name");
-testSuite.add(new DOUBAN.tool.TestCase({
+var testSuite = new DYUI.tool.TestSuite("TestSuite Name");
+testSuite.add(new DYUI.tool.TestCase({
 
     name : 'testInSuite',
 
@@ -93,9 +93,9 @@ testSuite.add(new DOUBAN.tool.TestCase({
     }
 }));
 
-DOUBAN.tool.TestRunner.add(simpleTest);
-DOUBAN.tool.TestRunner.add(anotherSimpleTest);
-DOUBAN.tool.TestRunner.add(testSuite);
-DOUBAN.tool.TestRunner.run();
+DYUI.tool.TestRunner.add(simpleTest);
+DYUI.tool.TestRunner.add(anotherSimpleTest);
+DYUI.tool.TestRunner.add(testSuite);
+DYUI.tool.TestRunner.run();
 
 
