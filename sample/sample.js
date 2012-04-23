@@ -41,6 +41,7 @@ var simpleTest = new DYUI.tool.TestCase({
 
     testAnotherthing : function() {
         UIALogger.logMessage("AnotherTest");
+        Assert.areEqual(1,2,"must be failed!");
     },
 
     testYetAnotherthing : function() {

@@ -9,6 +9,9 @@ var Assert = {
         }        
     },
     
+    _getComparisonFailureMessage : function(message,expected,actual){
+        return message + "    Expected: " + expected +"Actual: " + actual;
+    },
     
     fail: function(message){
          throw Assert._formatMessage(message, "Test force-failed.");
@@ -23,6 +26,12 @@ var Assert = {
     element_is_not_null: function(ele,message){
         if(Finder.isNil(ele)) {
             throw Assert._formatMessage(message, "the element is  null");
+        }
+    },
+    
+     areEqual : function (expected, actual, message) {
+        if (expected != actual) {
+            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Values should be equal."), expected, actual);
         }
     }
 }
