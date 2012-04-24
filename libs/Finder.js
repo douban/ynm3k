@@ -41,6 +41,21 @@ findElement_By_value: function(value, parent){
 isNil: function(element) {
 	return (element.toString() == "[object UIAElementNil]");
     },
+    
+scrollTo_And_Get: function(tableName, item, group) {
+	var table = Finder.findElement_By_name(tableName);
+	var grp;
+	var grps = table.groups();
+	if (grps.length) {
+		grp = table.groups()[group];
+	} else {
+		grp = table.cells();
+	}
+	var itm = grp[item];
+	table.scrollToElementWithName(itm.name());
+        return itm;
+},	
+
 
 _searchElements: function(elem, value, key) {
 	try {
