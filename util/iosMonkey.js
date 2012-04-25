@@ -1,7 +1,11 @@
 #import "../importAll.js"
 
+
+
 (function() {
-    var IOSMonkey = IOSMonkey || {};
+    IOSMonkey = function() {
+        
+    };
     
     IOSMonkey.prototype = {
 
@@ -24,16 +28,21 @@
             }
             var readyActions = [];
             if (action["tap"] == true) {
-                readyActions.append(me.tap);
+                readyActions.push(function() {
+                    me.tap();
+                });
             }
             if (action["flip"] == true) {
-                readyActions.append(me.flip);
+                readyActions.push(function() {
+                    me.flip();
+                });
             }
-            var actionLength = action.length;
+            var actionLength = readyActions.length;
             for (var i = 0; i < repeat; i++) {
                 var index = Math.floor(Math.random() * actionLength);
+                UIALogger.logMessage(index);
                 var move = readyActions[index];
-                apply(this, move);
+                move.call(this);
                 UIATarget.localTarget().delay(delay);
             }
         },
@@ -42,18 +51,19 @@
          * Randomly tap.
          */
         tap: function() {
-            
+            UIALogger.logMessage("Tap");
         },
         
         /**
          * Randomly flip.
          */
         flip: function() {
-            
+            UIALogger.logMessage("Flip");
         }
         
     };
 
+    DYUI.MONKEY = new IOSMonkey();
 })();
 
 
