@@ -1,5 +1,58 @@
 #import "../importAll.js"
 
+(function() {
+    var IOSMonkey = IOSMonkey || {};
+    
+    IOSMonkey.prototype = {
+
+        /**
+         * Run the monkey
+         * @param {Object} action collection eg {"tap": true, "flip": true}
+         * @param {int} repeat times of the monkey test. Default value is 1.
+         * @param {delay} The delay seconds after each action. Default value is 0.
+         */
+        run: function(action, repeat, delay) {
+            var me = this;
+            if (action == null) {
+                return;
+            }
+            if (repeat == null || repeat < 1) {
+                repeat = 1;
+            }
+            if (delay == null) {
+                delay = 0;
+            }
+            for (var i = 0; i < repeat; i++) {
+                if (action["tap"] == true) {
+                    me.tap();
+                    UIATarget.localTarget().delay(delay);
+                }
+                if (action["flip"] == true) {
+                    me.flip();
+                    UIATarget.localTarget().delay(delay);
+                }
+            }
+        },
+        
+        /**
+         * Randomly tap.
+         */
+        tap: function() {
+            
+        },
+        
+        /**
+         * Randomly flip.
+         */
+        flip: function() {
+            
+        },
+        
+    };
+
+})();
+
+
 
 //monkey(10);
 

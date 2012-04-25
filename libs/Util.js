@@ -40,6 +40,10 @@ var DYUI = DYUI || {};
             return DYUI.consts.OP.toString.apply(o) === DYUI.consts.ARRAY_TOSTRING;
         },
         
+        isDict: function(o) {
+            return DYUI.contes.OP.toString.applay(o) === DYUI.contes.DICT_TOSTRING;
+        },
+        
         /**
          * (intentionally not documented)
          * Simple escape function for XML attribute values.
