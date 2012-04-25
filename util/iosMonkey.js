@@ -22,15 +22,19 @@
             if (delay == null) {
                 delay = 0;
             }
+            var readyActions = [];
+            if (action["tap"] == true) {
+                readyActions.append(me.tap);
+            }
+            if (action["flip"] == true) {
+                readyActions.append(me.flip);
+            }
+            var actionLength = action.length;
             for (var i = 0; i < repeat; i++) {
-                if (action["tap"] == true) {
-                    me.tap();
-                    UIATarget.localTarget().delay(delay);
-                }
-                if (action["flip"] == true) {
-                    me.flip();
-                    UIATarget.localTarget().delay(delay);
-                }
+                var index = Math.floor(Math.random() * actionLength);
+                var move = action[index];
+                apply(this, move);
+                UIATarget.localTarget().delay(delay);
             }
         },
         
