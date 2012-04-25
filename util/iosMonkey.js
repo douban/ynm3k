@@ -32,7 +32,7 @@
             var actionLength = action.length;
             for (var i = 0; i < repeat; i++) {
                 var index = Math.floor(Math.random() * actionLength);
-                var move = action[index];
+                var move = readyActions[index];
                 apply(this, move);
                 UIATarget.localTarget().delay(delay);
             }
@@ -50,7 +50,7 @@
          */
         flip: function() {
             
-        },
+        }
         
     };
 
