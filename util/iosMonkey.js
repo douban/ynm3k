@@ -1,8 +1,5 @@
 #import "../importAll.js"
 
-
-
-(function() {
     IOSMonkey = function() {
         
     };
@@ -40,8 +37,9 @@
             var actionLength = readyActions.length;
             for (var i = 0; i < repeat; i++) {
                 var index = Math.floor(Math.random() * actionLength);
-                UIALogger.logMessage(index);
-                var move = readyActions[index];
+                UIALogger.logMessage("i is " + i);
+				UIALogger.logMessage("index is " + index);
+				var move = readyActions[index];
                 move.call(this);
                 UIATarget.localTarget().delay(delay);
             }
@@ -51,22 +49,24 @@
          * Randomly tap.
          */
         tap: function() {
-            UIALogger.logMessage("Tap");
+            UIALogger.logMessage("testtestTap");
         },
         
         /**
          * Randomly flip.
          */
         flip: function() {
-            UIALogger.logMessage("Flip");
+            UIALogger.logMessage("stsetsetsetFlip");
         }
         
     };
 
-    DYUI.MONKEY = new IOSMonkey();
-})();
-
-
+var monkey = new IOSMonkey();
+action = {
+   tap: true,
+   flip: true
+}
+monkey.run(action,5);
 
 //monkey(10);
 
