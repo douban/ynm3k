@@ -1,10 +1,9 @@
-#import "../importAll.js"
 
-    IOSMonkey = function() {
+IOSMonkey = function() {
         
-    };
+};
     
-    IOSMonkey.prototype = {
+IOSMonkey.prototype = {
 
         /**
          * Run the monkey
@@ -12,7 +11,7 @@
          * @param {int} repeat times of the monkey test. Default value is 1.
          * @param {delay} The delay seconds after each action. Default value is 0.
          */
-        run: function(action, repeat, delay) {
+    run: function(action, repeat, delay) {
             var me = this;
             if (action == null) {
                 return;
