@@ -1,181 +1,138 @@
 
-IOSMonkey = function() {
-        
-};
-    
-IOSMonkey.prototype = {
-
-        /**
-         * Run the monkey
-         * @param {Object} action collection eg {"tap": true, "flip": true}
-         * @param {int} repeat times of the monkey test. Default value is 1.
-         * @param {delay} The delay seconds after each action. Default value is 0.
-         */
+var IOSMonkey = {
     run: function(action, repeat, delay) {
-            var me = this;
-            if (action == null) {
-                return;
-            }
-            if (repeat == null || repeat < 1) {
-                repeat = 1;
-            }
-            if (delay == null) {
-                delay = 0;
-            }
-            var readyActions = [];
-            if (action["tap"] == true) {
-                readyActions.push(function() {
-                    me.tap();
+        var me = this;
+         if (action == null) {
+             return;
+         }
+         if (repeat == null || repeat < 1) {
+             repeat = 1;
+         }
+         if (delay == null) {
+            delay = 0;
+         }
+         var readyActions = [];
+         if (action["tap"] == true) {
+             readyActions.push(function() {
+                 me.tap();
                 });
-            }
-            if (action["flip"] == true) {
-                readyActions.push(function() {
-                    me.flip();
-                });
-            }
-            var actionLength = readyActions.length;
-            for (var i = 0; i < repeat; i++) {
-                var index = Math.floor(Math.random() * actionLength);
-                UIALogger.logMessage("i is " + i);
-				UIALogger.logMessage("index is " + index);
-				var move = readyActions[index];
-                move.call(this);
-                UIATarget.localTarget().delay(delay);
-            }
-        },
+         }
+        if (action["flick_NS"] == true) {
+            readyActions.push(function() {
+            me.flick_NS();
+            });
+         }
+         if(action["flick_WE"]==true){
+             readyActions.push(function(){me.flick_WE()});
+         }
+         if(action["doubleTap"]==true){
+             readyActions.push(function(){me.doubleTap()});
+         }
+         if(action["shake"]==true){
+             readyActions.push(function(){me.shake()});
+         }
+         if(action["volumeUD"]==true){
+             readyActions.push(function(){me.volumeUD()});
+         }
+         if(action["lock"]==true){
+             readyActions.push(function(){me.lock()});
+         }
+         var actionLength = readyActions.length;
+         for (var i = 0; i < repeat; i++) {
+             var index = Math.floor(Math.random() * actionLength);
+             var move = readyActions[index];
+             move.call(this);
+             UIATarget.localTarget().delay(delay);
+         }
+       },
         
         /**
          * Randomly tap.
          */
         tap: function() {
-            UIALogger.logMessage("testtestTap");
+            var xyobj = this._getXY();
+            var target = UIATarget.localTarget();
+            target.tap({x:xyobj.x,y:xyobj.y});
         },
         
         /**
          * Randomly flip.
          */
-        flip: function() {
-            UIALogger.logMessage("stsetsetsetFlip");
-        }
+        flick_NS: function() {
+           var xyobj = this._getXY();
+           var target = UIATarget.localTarget();
+           var mid_y = (xyobj.y2-xyobj.y1)/2;
+		   var to_y = 0;
+           if(xyobj.y>mid_y){
+              to_y = xyobj.y-mid_y;
+            }else{
+              to_y = xyobj.y+mid_y;
+            }
+            target.flickFromTo({x:xyobj.x,y:xyobj.y},{x:xyobj.x,y:to_y});
+          
+        },
         
-    };
+        flick_WE: function(){
+            var xyobj = this._getXY();
+            var target = UIATarget.localTarget();
+            var mid_x = (xyobj.x2-xyobj.x1)/2;
+            var to_x = 0;
+            if(xyobj.x>mid_x){
+                to_x = xyobj.x-mid_x;
+            }else{
+                to_x = xyobj.x+mid_x;
+            }
+            target.flickFromTo({x:xyobj.x,y:xyobj.y},{x:to_x,y:xyobj.y});
+        },
 
-var monkey = new IOSMonkey();
+
+        _getXY : function(){
+            var target = UIATarget.localTarget();
+            var app = target.frontMostApp();
+            var origin_x = app.rect().origin.x;
+            var origin_y = app.rect().origin.y;
+            var width = app.rect().size.width;
+            var height = app.rect().size.height;
+            var x_x = Math.floor(width*Math.random())+origin_x;
+            var y_y = Math.floor(height*Math.random())+origin_y;
+
+            return {x:x_x,y:y_y,x1:origin_x,y1:origin_y,x2:width,y2:height};
+        },
+
+
+        doubleTap : function(){
+            var xyobj = this._getXY();
+            var target = UIATarget.localTarget();
+            target.doubleTap({x:xyobj.x,y:xyobj.y});
+        },
+
+        shake : function(){
+            var target = UIATarget.localTarget();
+            target.shake();
+        },
+
+        lock  :function(){
+			var target = UIATarget.localTarget();
+            target.lockForDuration(5);
+        },
+
+        volumeUD : function(){
+            var target = UIATarget.localTarget();
+            if(Math.random()>0.5){
+                target.clickVolumeDown();
+            }else{
+                target.clickVolumeUp();
+            }
+        }
+};
+
 action = {
-   tap: true,
-   flip: true
+   tap: false,
+   flick_NS: false,
+   flick_WE: true,
+   doubleTap:true,
+   shake:true,
+   volumeUD:true,
+   lock:true
 }
-monkey.run(action,5);
-
-//monkey(10);
-
-function monkey(times,delay_time){
-	if (!delay_time) {
-			delay_time = 0.1;
-		}
-	var target = UIATarget.localTarget();
-	var app = target.frontMostApp();
-	var appWindow = target.frontMostApp().mainWindow();
-	var appwidth = appWindow.contentArea().size.width;
-	var appheight = appWindow.contentArea().size.height;
-	
-	var origin_x = appWindow.contentArea().origin.x;
-	var origin_y = appWindow.contentArea().origin.y;
-	
-	var width_times = appwidth/20;
-	var height_times = appheight/20;
-	
-	UIALogger.logMessage("Screen width:"+ target.rect().size.width);
-	UIALogger.logMessage("Screen height:"+ target.rect().size.height);
-	
-	UIALogger.logMessage("Screen width11:"+ target.rect().origin.x);
-	UIALogger.logMessage("Screen height11:"+ target.rect().origin.y);
-	
-	for(var i = 0;i<times;i++){
-		var x_x = Math.floor(Math.random()*width_times)*20;
-		var y_y = Math.floor(Math.random()*height_times)*20;
-		if(y_y<20){y_y=y_y+20}
-		target.tap({x:x_x,y:y_y});
-		target.delay(delay_time);
-	}
-}
-
-/**
- * This is a function that randomly make vertical swipe from up to down on the screen.
- * @returns
- */
-function randomVerticalUpToDown() {
-    var target = UIATarget.localTarget(); 
-    var appWindow = target.frontMostApp().mainWindow();
-
-    var appwidth = appWindow.contentArea().size.width;
-    var appheight = appWindow.contentArea().size.height;
-
-    var width_times = appwidth / 20;
-    var height_times = appheight / 20;
-
-    var x_pos = Math.floor(Math.random() * width_times) * 20;
-    var y_start = Math.floor(Math.random() * height_times) * 10;
-    var y_end = Math.floor(Math.random() * height_times) * 10 + height_times * 10;
-    target.flickFromTo({x:x_pos, y:y_start},{x:x_pos, y:y_end});
-}
-
-/**
- * This is a function that randomly make vertical swipe from up to down on the screen.
- * @returns
- */
-function randomVerticalDownToUp() {
-    var target = UIATarget.localTarget(); 
-    var appWindow = target.frontMostApp().mainWindow();
-
-    var appwidth = appWindow.contentArea().size.width;
-    var appheight = appWindow.contentArea().size.height;
-
-    var width_times = appwidth / 20;
-    var height_times = appheight / 20;
-
-    var x_pos = Math.floor(Math.random() * width_times) * 20;
-    var y_start = Math.floor(Math.random() * height_times) * 10 + height_times * 10;
-    var y_end = Math.floor(Math.random() * height_times) * 10;
-    target.flickFromTo({x:x_pos, y:y_start},{x:x_pos, y:y_end});
-}
-
-/**
- * This is a function that randomly make horizontal swipe from left to right on the screen.
- * @returns
- */
-function randomHorizontalLeftToRight() {
-    var target = UIATarget.localTarget(); 
-    var appWindow = target.frontMostApp().mainWindow();
-
-    var appwidth = appWindow.contentArea().size.width;
-    var appheight = appWindow.contentArea().size.height;
-
-    var width_times = appwidth / 20;
-    var height_times = appheight / 20;
-
-    var y_pos = Math.floor(Math.random() * height_times) * 20;
-    var x_start = Math.floor(Math.random() * width_times) * 10;
-    var x_end = Math.floor(Math.random() * width_times) * 10 + width_times * 10;
-    target.flickFromTo({x:x_start, y:y_pos},{x:x_end, y:y_pos});
-}
-
-/**
- * This is a function that randomly make horizontal swipe from right to left on the screen.
- * @returns
- */
-function randomHorizontalRightToLeft() {
-    var target = UIATarget.localTarget(); 
-    var appWindow = target.frontMostApp().mainWindow();
-
-    var appwidth = appWindow.contentArea().size.width;
-    var appheight = appWindow.contentArea().size.height;
-
-    var width_times = appwidth / 20;
-    var height_times = appheight / 20;
-
-    var y_pos = Math.floor(Math.random() * height_times) * 20;
-    var x_start = Math.floor(Math.random() * width_times) * 10 + width_times * 10;
-    var x_end = Math.floor(Math.random() * width_times) * 10;
-    target.flickFromTo({x:x_start, y:y_pos},{x:x_end, y:y_pos});
-}
+IOSMonkey.run(action,30,0.5);
