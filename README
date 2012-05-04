@@ -1,1 +1,16 @@
-test
+要你命3000 使用说明
+
+1  先下载代码（这个写在这里不知道是不是废话）
+2  运行setup.sh 脚本，脚本会自动设置相关的文件路径
+3  直接开始你的ios自动化测试的旅程吧
+
+相关脚本的写法，请参看 sample路径下的内容
+如果有ynm3k不能完成的功能，请联系mijun@douban.com;或者直接使用UI Automation API
+
+CI 环境说明
+
+1  setup脚本会自动建立 一个ynm3k-reports的目录
+2  使用runTest.sh 脚本运行测试，例如：
+   ./runTests.sh  ./sample/alltests.js   "/Users/komejun/Library/Application Support/iPhone Simulator/5.0/Applications/1622F505-8C07-47E0-B0F0-3A125A88B329/Recipes.app/"
+   注意，最后一个参数一定要用双引号引起来
+3  当测试完成的时候，系统自动生成测试报告在/ynm3k-reports/test.xml,可以直接使用Junit-report插件解析
