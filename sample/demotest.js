@@ -47,8 +47,8 @@ var anotherSimpleTest = new DYUI.tool.TestCase({
 });
 
 
-var testSuite = new DYUI.tool.TestSuite("TestSuite Name");
-testSuite.add(new DYUI.tool.TestCase({
+var demotest = new DYUI.tool.TestSuite("TestSuite Name");
+demotest.add(new DYUI.tool.TestCase({
 
     name : 'testInSuite',
 
@@ -68,3 +68,5 @@ testSuite.add(new DYUI.tool.TestCase({
         UIALogger.logMessage("SuiteNothing serious");
     }
 }));
+demotest.add(simpleTest);
+demotest.add(anotherSimpleTest);

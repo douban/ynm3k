@@ -1,7 +1,7 @@
 #import "../robot4ios/importAll.js";
 
 
-var uisample = new DYUI.tool.TestCase({
+var test = new DYUI.tool.TestCase({
     
     name : 'UI Sample',
     

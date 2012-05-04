@@ -4,9 +4,11 @@
 #import "demotest.js";
 #import "test.js"
 
-var reportfilename = "/Users/komejun/Documents/doubangit/mobileapps/ynm3k/test-report/testresult.xml";
-    
+UIALogger.logMessage("test begin");
+
+var reportfilename = "/Users/komejun/Documents/publicgit/robot4ios/ynm3k-reports/test.xml"  
 var handleCompeleteResult = function(testresults) {
+    //var reportfilename = System.createFile("test.xml")
     var reporter = new DYUI.tool.TestReporter(reportfilename);
     reporter.report(testresults['results']);
     UIALogger.logMessage("Comeplete");
