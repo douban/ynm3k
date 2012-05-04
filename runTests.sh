@@ -27,6 +27,8 @@ resultpath="`pwd`/ynm3k-reports/"
 instruments \
 $RUN_ON_SPECIFIC_DEVICE_OPTION \
 -t $TRACETEMPLATE \
-$APP_LOCATION \
+"$APP_LOCATION" \
 -e UIASCRIPT $BASE_TEST_SCRIPT \
 -e UIARESULTSPATH $resultpath
+
+rm -rf instrumentscli*
