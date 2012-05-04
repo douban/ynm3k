@@ -1,16 +1,7 @@
 #import "../robot4ios/importAll.js";
-#import "demotest.js";
 
-UIALogger.logMessage("testBegin");
-    
-var handleCompeleteResult = function(testresults) {
-    var reporter = new DYUI.tool.TestReporter("/Users/komejun/Documents/publicgit/report/testreport.xml");
-    reporter.report(testresults['results']);
-    UIALogger.logMessage("Comeplete");
-}
-DYUI.tool.TestRunner.subscribe(DYUI.tool.TestRunner.COMPLETE_EVENT, handleCompeleteResult);
 
-var demoTest = new DYUI.tool.TestCase({
+var uisample = new DYUI.tool.TestCase({
     
     name : 'UI Sample',
     
@@ -51,10 +42,3 @@ var demoTest = new DYUI.tool.TestCase({
         }
     }); 
 
-DYUI.tool.TestRunner.add(demoTest);
-DYUI.tool.TestRunner.add(simpleTest);
-DYUI.tool.TestRunner.add(anotherSimpleTest);
-DYUI.tool.TestRunner.add(testSuite);
-
-
-DYUI.tool.TestRunner.run();
