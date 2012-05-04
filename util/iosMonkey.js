@@ -127,12 +127,12 @@ var IOSMonkey = {
 };
 
 action = {
-   tap: false,
-   flick_NS: false,
+   tap: true,
+   flick_NS: true,
    flick_WE: true,
    doubleTap:true,
    shake:true,
    volumeUD:true,
    lock:true
 }
-IOSMonkey.run(action,30,0.5);
+IOSMonkey.run(action,30,0);
