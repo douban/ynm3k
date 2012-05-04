@@ -733,6 +733,13 @@ DYUI.tool.TestRunner = (function() {
                 UIALogger.logFail("The ynm3k cannot run on ios which version is less than 5");
                 return;
             }
+            var handleCompeleteResult = function(testresults) {
+                    var reportfilename = System.createFile("test.xml")
+                        var reporter = new DYUI.tool.TestReporter(reportfilename);
+                        reporter.report(testresults['results']);
+                        UIALogger.logMessage("ALL test finished,and the report is: "+reportfilename);
+            }
+            DYUI.tool.TestRunner.subscribe(DYUI.tool.TestRunner.COMPLETE_EVENT, handleCompeleteResult);
             
             //pointer to runner to avoid scope issues 
             var runner = DYUI.tool.TestRunner;

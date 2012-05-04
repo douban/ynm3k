@@ -12,11 +12,11 @@ otherjs="${p}System_bak.js"
 echo $p
 echo $js
 
-sed -e "s#scriptPath:.*#scriptPath:\"${p}\"#" $js > $otherjs
+sed -e "s#scriptPath:.*#scriptPath:\"${p}\",#" $js > $otherjs
 
 mv $otherjs  $js
 
 resultp="`pwd`/ynm3k-reports/"
 
-sed -e "s#resultPath:.*#resultPath:\"${resultp}\"#" $js > $otherjs
+sed -e "s#resultPath:.*#resultPath:\"${resultp}\",#" $js > $otherjs
 mv $otherjs  $js
