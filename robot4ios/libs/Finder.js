@@ -10,8 +10,10 @@ findElement_By_name: function(name, parent){
 	while (((new Date()).getTime() - start) < (timeout * 1000) || timeout == 0) {
 		result = this._searchElements(parent, name, "name");
 		if (!this.isNil(result)) {
-                    //UIATarget.localTarget().delay(0.5); 
-		   return result;		   
+		   if(!result.isVisible()){
+            result.scrollToVisible();
+           }
+            return result;		   
 		}
 	}
 	//UIALogger.logFail("Unable to find element named " + name);
