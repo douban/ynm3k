@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if  $3
+if [ $3 = 1 ]
 then
  echo $1 >> $2
 else
