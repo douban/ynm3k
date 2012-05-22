@@ -2,7 +2,7 @@
 
 
 if [  -d "ynm3k-reports" ]; then
-    rm ynm3k-reports
+    rm -rf ynm3k-reports
 fi
 mkdir ynm3k-reports
 
