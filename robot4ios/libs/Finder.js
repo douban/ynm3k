@@ -48,10 +48,10 @@ isNil: function(element) {
 	return (element.toString() == "[object UIAElementNil]");
     },
     
+/*
 scrollTo_And_Get: function(tableName, item, group) {
 	var table = Finder.findElement_By_name(tableName);
 	var grp;
-	//var grps = table.groups();
 	if (!group==null) {
 		grp = table.groups()[group];
 	} else {
@@ -60,8 +60,21 @@ scrollTo_And_Get: function(tableName, item, group) {
 	var itm = grp[item];
 	table.scrollToElementWithName(itm.name());
         return itm;
-},	
+    },*/
 
+scrollTo_And_Get: function(tableName,item,group){
+    var table  = Finder.findElement_By_name(tableName);
+    var grp;
+    if( item<0 ){
+        grp = table.groups()[group];
+    }else if ( (group==null) && (item>=0)){
+        grp = table.cells()[item];
+    }else{
+        grp = table.groups()[group].cells()[item];
+    }
+    table.scrollToElementWithName(grp.name());
+    return grp;
+},
 
 _searchElements: function(elem, value, key) {
 	try {
