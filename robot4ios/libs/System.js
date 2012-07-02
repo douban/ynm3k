@@ -3,8 +3,9 @@ var System = {
 /*
 scriptPath and resultPath need to set before use it.
 */
-scriptPath:"/Users/komejun/Documents/publicgit/robot4ios/robot4ios/libs/",
-resultPath:"/Users/komejun/Documents/publicgit/robot4ios/ynm3k-reports/",
+scriptPath:"/Users/komejun/Documents/publicgit/ynm3k/robot4ios/libs/shells/",
+resultPath:"/Users/komejun/Documents/publicgit/ynm3k/ynm3k-reports/",
+screenPath:"/Users/komejun/Documents/publicgit/ynm3k/ynm3k-tmp/",
 
 printSystemInfo: function(){
     var target = UIATarget.localTarget();
@@ -45,7 +46,7 @@ createFile: function(endName){
     var host = target.host();
     var str = this.resultPath+endName;
     UIALogger.logMessage("test begin:"+str);
-    var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"touchtest.sh", [str], 5);
+    var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"createFile.sh", [str], 5);
     if(result.exitCode==0){
         return str;
         }else{
@@ -57,7 +58,7 @@ createFile: function(endName){
 writeFile: function(filename, message,flag){
     var target = UIATarget.localTarget(); 
     var host = target.host();
-    var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"echotest.sh", [message,filename,flag], 5);
+    var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"writeFile.sh", [message,filename,flag], 5);
     if(result.exitCode==0){
         return true;
         }else{

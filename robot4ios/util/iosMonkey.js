@@ -52,6 +52,7 @@ var IOSMonkey = {
         tap: function() {
             var xyobj = this._getXY();
             var target = UIATarget.localTarget();
+			UIALogger.logMessage("x="+xyobj.x+":y="+xyobj.y);
             target.tap({x:xyobj.x,y:xyobj.y});
         },
         
@@ -66,8 +67,9 @@ var IOSMonkey = {
            if(xyobj.y>mid_y){
               to_y = xyobj.y-mid_y;
             }else{
-              to_y = xyobj.y+mid_y;
+              to_y = xyobj.y+mid_y-2;
             }
+			UIALogger.logMessage("x1="+xyobj.x+":y1="+xyobj.y+"::x2="+xyobj.x+":y="+to_y);
             target.flickFromTo({x:xyobj.x,y:xyobj.y},{x:xyobj.x,y:to_y});
           
         },
@@ -80,8 +82,9 @@ var IOSMonkey = {
             if(xyobj.x>mid_x){
                 to_x = xyobj.x-mid_x;
             }else{
-                to_x = xyobj.x+mid_x;
+                to_x = xyobj.x+mid_x-2;
             }
+			UIALogger.logMessage("x1="+xyobj.x+":y1="+xyobj.y+"::x2="+to_x+":y="+xyobj.y);
             target.flickFromTo({x:xyobj.x,y:xyobj.y},{x:to_x,y:xyobj.y});
         },
 
@@ -113,7 +116,7 @@ var IOSMonkey = {
 
         lock  :function(){
 			var target = UIATarget.localTarget();
-            target.lockForDuration(5);
+            target.lockForDuration(1);
         },
 
         volumeUD : function(){
@@ -127,12 +130,12 @@ var IOSMonkey = {
 };
 
 action = {
-   tap: true,
-   flick_NS: true,
-   flick_WE: true,
-   doubleTap:true,
-   shake:true,
+   tap: false,
+   flick_NS: false,
+   flick_WE: false,
+   doubleTap:false,
+   shake:false,
    volumeUD:true,
-   lock:true
+   lock:false
 }
-IOSMonkey.run(action,30,0);
+IOSMonkey.run(action,5000,1);

@@ -1,3 +1,7 @@
+#import "Assert.js"
+#import "Tools.js"
+
+
 var Finder = {
     
 findElement_By_name: function(name, parent){
@@ -10,14 +14,14 @@ findElement_By_name: function(name, parent){
 	while (((new Date()).getTime() - start) < (timeout * 1000) || timeout == 0) {
 		result = this._searchElements(parent, name, "name");
 		if (!this.isNil(result)) {
-		   if(!result.isVisible()){
-            result.scrollToVisible();
+            if(!inScreen(result)){
+                result.scrollToVisible();
            }
             return result;		   
 		}
 	}
 	//UIALogger.logFail("Unable to find element named " + name);
-        //Assert.fail("Unable to find element named " + name);
+    //    Assert.fail("Unable to find element named " + name);
         return result;
     },
   
@@ -30,13 +34,13 @@ findElement_By_value: function(value, parent){
 	var result;
 	while (((new Date()).getTime() - start) < (timeout * 1000) || timeout == 0) {
 		result = this._searchElements(parent, value, "value");
-		if (!this.isNil(result)) {
+		if (result.isValid()) {
                     UIATarget.localTarget().delay(0.5); 
 		   return result;		   
 		}
 	}
 	//UIALogger.logFail("Unable to find element named " + name);
-        //Assert.fail("Unable to find element value " + value);
+    //    Assert.fail("Unable to find element value " + value);
         return result;
     },
 
@@ -47,8 +51,8 @@ isNil: function(element) {
 scrollTo_And_Get: function(tableName, item, group) {
 	var table = Finder.findElement_By_name(tableName);
 	var grp;
-	var grps = table.groups();
-	if (grps.length) {
+	//var grps = table.groups();
+	if (!group==null) {
 		grp = table.groups()[group];
 	} else {
 		grp = table.cells();

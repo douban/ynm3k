@@ -22,7 +22,12 @@ if [ ! "$DEVICE_ID" = "" ]; then
   APP_LOCATION=`basename $APP_LOCATION`
 fi
 
-resultpath="`pwd`/ynm3k-reports/"
+if [  -d "ynm3k-tmp" ]; then
+   rm -rf ynm3k-tmp
+fi
+mkdir ynm3k-tmp
+
+resultpath="`pwd`/ynm3k-tmp/"
 # Kick off the instruments build
 instruments \
 $RUN_ON_SPECIFIC_DEVICE_OPTION \

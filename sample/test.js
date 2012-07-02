@@ -22,7 +22,7 @@ var test = new DYUI.tool.TestCase({
         app.logElementTree();
         },
     test_tableviews : function(){
-         var tableviews =  Finder.scrollTo_And_Get("Empty list",15,0);
+         var tableviews =  Finder.scrollTo_And_Get("Empty list",15);
 		Assert.element_is_not_null(tableviews);
         },
     test_addRecipes : function(){
@@ -36,9 +36,15 @@ var test = new DYUI.tool.TestCase({
         Assert.element_is_not_null(title);
         },
     test_addError : function(){
-        Finder.findElement_By_name("Recipes").tap();
-        var title = Finder.findElement_By_value("Unit Conversion");
-        Assert.element_is_null(title);
+       var target = UIATarget.localTarget();
+       var reci =  Finder.findElement_By_name("Recipes",target.frontMostApp().mainWindow());
+       Assert.element_is_not_null(reci);
+       Log(reci.name());
+       Log("test"+getElement_hitpointy(reci));
+       reci.tap();
+       // var title = Finder.findElement_By_value("Unit Conversion");
+       // Waiter.wait(10);
+       // Assert.element_is_null(title);
         }
     }); 
 

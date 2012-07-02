@@ -1,4 +1,5 @@
 #import "Finder.js"
+#import "Tools.js"
 var Assert = {
     
     _formatMessage : function (customMessage, defaultMessage) {
@@ -31,6 +32,48 @@ var Assert = {
     element_is_not_null: function(ele,message){
         if(Finder.isNil(ele)) {
             throw Assert._formatMessage(message, "the element is  null");
+        }
+    },
+
+    element_is_visible: function(ele,message){
+        if(!ele.isVisible()){
+            throw Assert._formatMessage(message,"the element is not visible");
+        }
+    },
+
+    element_is_not_visible: function(ele,message){
+        if(ele.isVisible()){
+            throw Assert._formatMessage(message,"the element is visible");
+        }
+    },
+
+    element_is_enabled: function(ele,message){
+        if(!ele.isEnabled()){
+            throw Assert._formatMessage(message,"the element is not enabled");
+        }
+    },
+
+    element_is_not_enabled: function(ele,message){
+        if(ele.isEnabled()){
+            throw Assert._formatMessage(message,"the element is enabled");
+        }
+    },
+
+    element_is_valid: function(ele,message){
+        if(!ele.isValid()){
+            throw Assert._formatMessage(message,"the element is not valid");
+        }
+    },
+
+    element_is_not_valid: function(ele,message){
+        if(ele.isValid()){
+            throw Assert._formatMessage(message,"the element is valid");
+        }
+    },
+
+    elemen_is_inscreen: function(ele,message){
+        if(!inScreen(ele)){
+            throw Assert._formatMessage(message,"the element is in screen");
         }
     },
     

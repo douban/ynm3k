@@ -51,7 +51,8 @@ var DYUI = DYUI || {};
          * @return {String} The escaped text.
          */
         xmlEscape: function(text){
-            return text.replace(/["'<>&]/g, function(c){
+            var text1 = text+"";
+            return text1.replace(/["'<>&]/g, function(c){
                 switch(c){
                     case "<":   return "&lt;";
                     case ">":   return "&gt;";
