@@ -2,7 +2,7 @@
 
 XCODE_PATH=`xcode-select -print-path`
 #TRACETEMPLATE="$XCODE_PATH/Platforms/iPhoneOS.platform/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate"
-TRACETEMPLATE=$(find ${XCODE_PATH%/*} -type f -name "Automation.tracetemplateT")
+TRACETEMPLATE=$(find ${XCODE_PATH%/*} -type f -name "Automation.tracetemplate")
 BASE_TEST_SCRIPT=$1
 APP_LOCATION=$2
 DEVICE_ID=$3
