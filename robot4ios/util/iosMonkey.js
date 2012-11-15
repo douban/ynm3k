@@ -93,8 +93,8 @@ var IOSMonkey = {
             var target = UIATarget.localTarget();
             var origin_x = target.frontMostApp().rect().origin.x;
             var origin_y = target.frontMostApp().rect().origin.y;
-            var width = app.rect().size.width;
-            var height = app.rect().size.height;
+            var width = target.frontMostApp().rect().size.width;
+            var height = target.frontMostApp().rect()..size.height;
             var x_x = Math.floor(width*Math.random())+origin_x;
             var y_y = Math.floor(height*Math.random())+origin_y;
 
@@ -129,12 +129,12 @@ var IOSMonkey = {
 };
 
 action = {
-   tap: false,
-   flick_NS: false,
-   flick_WE: false,
+   tap: true,
+   flick_NS: true,
+   flick_WE: true,
    doubleTap:false,
-   shake:false,
-   volumeUD:true,
+   shake:true,
+   volumeUD:false,
    lock:false
 }
-IOSMonkey.run(action,5000,1);
+IOSMonkey.run(action,5000,0.3);
