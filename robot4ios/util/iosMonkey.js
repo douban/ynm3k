@@ -94,7 +94,7 @@ var IOSMonkey = {
             var origin_x = target.frontMostApp().rect().origin.x;
             var origin_y = target.frontMostApp().rect().origin.y;
             var width = target.frontMostApp().rect().size.width;
-            var height = target.frontMostApp().rect()..size.height;
+            var height = target.frontMostApp().rect().size.height;
             var x_x = Math.floor(width*Math.random())+origin_x;
             var y_y = Math.floor(height*Math.random())+origin_y;
 
