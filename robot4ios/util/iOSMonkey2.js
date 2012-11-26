@@ -8,10 +8,10 @@ function iOSMonkey2(){
 	this.elementArray = null;
 
 	this._addToArray = function(root,len){
-		if( root.toString()!= "[object UIAActivityIndicator]" && root.toString() != "[object UIAKey]"){
+		if( root.toString()!= "[object UIAActivityIndicator]" && root.toString() != "[object UIAKey]" && root.name() != "NoTap"){
 			if(root.isEnabled() && root.isVisible()){
 				if(len==0){
-					if(root.hitpoint() != null && root.name() != "NoTap"){
+					if(root.hitpoint() != null){
 						this.elementArray.push(root);
 					}
 				}
@@ -133,6 +133,12 @@ function iOSMonkey2(){
 		}
 
 	}
+
+	this.screenShoot = function(imageName){
+		var target = UIATarget.localTarget();
+		var app = target.frontMostApp();
+		target.captureRectWithName(target.frontMostApp().rect(),imageName);
+	}
 	this.waitForLoad = function(preDelay) {        
 		var target = UIATarget.localTarget();
 		if (!preDelay) {
@@ -161,8 +167,15 @@ function iOSMonkey2(){
 
 mon = new iOSMonkey2();
 UIATarget.localTarget().setTimeout(0);
+/*
+mon._getAllElements();
+for(var i = 0; i < mon.elementArray.length; i++){
+	var name = mon.elementArray[i].name()+"---"+mon.elementArray[i].toString();
+	UIALogger.logMessage(name+"");
+}*/
 for(var i = 0; i< 1000; i++){
 	mon.operator();
+	mon.screenShoot("test");
 	//mon.waitForLoad(1);
-	UIATarget.localTarget().delay(1);
+	UIATarget.localTarget().delay(2);
 }
