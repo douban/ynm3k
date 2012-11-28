@@ -8,11 +8,16 @@ function iOSMonkey2(){
 	this.elementArray = null;
 
 	this._addToArray = function(root,len){
-		if( root.toString()!= "[object UIAActivityIndicator]" && root.toString() != "[object UIAKey]" && root.name() != "NoTap"){
+		var rootname = root.name()+""
+		rootname = rootname.toLowerCase();
+		if( !this._isIndicator(root) && root.toString() != "[object UIAKey]" && rootname.match("notap"+"$") !="notap" ){
 			if(root.isEnabled() && root.isVisible()){
 				if(len==0){
 					if(root.hitpoint() != null){
-						this.elementArray.push(root);
+						var rect = root.hitpoint();
+						if(rect.y>20){
+							this.elementArray.push(root);
+						}
 					}
 				}
 				if(this._toFlick(root) || this._toType(root)){
@@ -36,6 +41,22 @@ function iOSMonkey2(){
 		}
 	}
 
+	this._isIndicator = function(element){
+		return element.toString().match("Indicator"+"$")=="Indicator";
+	}
+
+	this._findIndicator = function(root){
+		var elements = root.elements();
+		if(elements.length !=0 && elements != null){
+			for(var i =0; i<elements.length;i++){
+				if(this._isIndicator(elements[i])){
+					return 1;
+				}
+				this._findIndicator(elements[i]);
+			}
+		}
+	}
+
 	this._getAllElements = function(){
 		var app = UIATarget.localTarget().frontMostApp();
 		this.elementArray = null;
@@ -55,6 +76,7 @@ function iOSMonkey2(){
 	this._selector = function(){
 		this._getAllElements();
 		var len = this.elementArray.length;
+		//UIALogger.logMessage(len+"");
 		var random = Math.round(Math.random() * len);
 		if (random == len){
 			random = random-1;
@@ -82,17 +104,24 @@ function iOSMonkey2(){
 				element.setValue(this._falseString(element.value()));
 			}
 		}else{
-			element.tap();
+			var x = Math.random().toFixed(2);
+			var y = Math.random().toFixed(2);
+			element.tapWithOptions({tapOffset:{x:x,y:y}});
 		}
 
 	}
 
 
 	this._flick = function(element){
-		element.scrollToVisible();
-		var x = Math.random();
-		var y = Math.random();
+		//element.scrollToVisible();
+		var x = Math.random().toFixed(2);
+		var y = Math.random().toFixed(2);
 		element.flickInsideWithOptions({startOffset:{x:0.5, y:0.5}, endOffset:{x:x,y:y}});
+	}
+
+	this._getAppSize = function(){
+		var rect = UIATarget.localTarget().frontMostApp().rect();
+		return rect;
 	}
 
 	this._type = function(element){
@@ -129,7 +158,9 @@ function iOSMonkey2(){
 		}else if(this._toType(element)){
 			this._type(element);
 		}else{
-			element.tap();
+			if(element.hitpoint() != null){
+				this._tap(element);
+			}
 		}
 
 	}
@@ -139,6 +170,7 @@ function iOSMonkey2(){
 		var app = target.frontMostApp();
 		target.captureRectWithName(target.frontMostApp().rect(),imageName);
 	}
+
 	this.waitForLoad = function(preDelay) {        
 		var target = UIATarget.localTarget();
 		if (!preDelay) {
@@ -152,7 +184,9 @@ function iOSMonkey2(){
 		var counter = 0;      
 		while ((!done) && (counter < 60)) {
 			var progressIndicator = UIATarget.localTarget().frontMostApp().windows()[0].activityIndicators()[0];
-			if (progressIndicator != "[object UIAElementNil]") {
+			var indicator = this._findIndicator(UIATarget.localTarget().frontMostApp());
+			if (indicator == 1) {
+				UIALogger.logMessage("来到这里等待一下")
 				target.delay(0.5);
 				counter++;  
 			}
@@ -167,15 +201,14 @@ function iOSMonkey2(){
 
 mon = new iOSMonkey2();
 UIATarget.localTarget().setTimeout(0);
-/*
-mon._getAllElements();
-for(var i = 0; i < mon.elementArray.length; i++){
-	var name = mon.elementArray[i].name()+"---"+mon.elementArray[i].toString();
-	UIALogger.logMessage(name+"");
-}*/
 for(var i = 0; i< 1000; i++){
+	try{
 	mon.operator();
+	}catch(err){
+		UIALogger.logMessage("这里有一个异常");
+		UIALogger.logMessage(err.toString()+"");
+	}
 	mon.screenShoot("test");
-	//mon.waitForLoad(1);
-	UIATarget.localTarget().delay(2);
+	mon.waitForLoad(1);
+	//UIATarget.localTarget().delay(2);
 }
