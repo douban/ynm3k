@@ -3,8 +3,18 @@
 #import "System.js"
 #import "Waiter.js"
 
-function Log(msg) {
+function log(msg) {
     UIALogger.logMessage(msg+" ");
+}
+
+function setLocation(Lng,Lat){
+    var target = UIATarget.localTarget();
+    target.setLocation({"longitude":Lng,"latitude":Lat})
+}
+
+function shake(){
+    var target = UIATarget.localTarget()
+    target.shake()
 }
 
 function screenShoot(imageName,rect){
