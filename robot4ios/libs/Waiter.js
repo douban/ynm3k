@@ -7,7 +7,7 @@ wait : function(times){
     var target = UIATarget.localTarget();
     target.delay(times);
     },
-wait4IndicatorDis = function(func,times,preDelay) {        
+wait4IndicatorDis: function(func,times,preDelay) {        
     if (!preDelay) {
         target.delay(0);
         }
