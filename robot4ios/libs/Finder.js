@@ -5,15 +5,15 @@
 var Finder = {
 
 findElementByName: function(name,parent){
-    this.findElement_By_name(name,parent)
+    return this.findElement_By_name(name,parent)
 },
 
 findElementByValue: function(name,parent){
-    this.findElement_By_value(name,parent)
+    return this.findElement_By_value(name,parent)
 },
 
 findListChild: function(tableName,item,group){  
-    this.scrollTo_And_Get(tableName,item.group)
+    return this.scrollTo_And_Get(tableName,item.group)
 },
 
 findElement_By_name: function(name, parent){
