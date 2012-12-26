@@ -1,19 +1,32 @@
 #import "Assert.js"
 #import "Tools.js"
-
+#import "Waiter.js"
 
 var Finder = {
 
 findElementByName: function(name,parent){
+    Waiter.wait(1)
     return this.findElement_By_name(name,parent)
 },
 
 findElementByValue: function(name,parent){
+    Waiter.wait(1)
     return this.findElement_By_value(name,parent)
 },
 
-findListChild: function(tableName,item,group){  
-    return this.scrollTo_And_Get(tableName,item.group)
+findListChild: function(tableName,item,group){
+    Waiter.wait(1)
+    var table  = Finder.findElement_By_name(tableName);
+    var grp;
+    if( item<0 ){
+        grp = table.groups()[group];
+    }else if ( (group==null) && (item>=0)){
+        grp = table.cells()[item];
+    }else{
+        grp = table.groups()[group].cells()[item];
+    }
+    table.scrollToElementWithName(grp.name());
+    return grp;
 },
 
 findElement_By_name: function(name, parent){
