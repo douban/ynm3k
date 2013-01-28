@@ -20,7 +20,7 @@ fi
 # If running on device, only need name of app, full path not important
 if [ ! "$DEVICE_ID" = "" ]; then
   RUN_ON_SPECIFIC_DEVICE_OPTION="-w $DEVICE_ID"
-  APP_LOCATION=`basename $APP_LOCATION`
+  APP_LOCATION=`basename "$APP_LOCATION"`
 fi
 
 if [  -d "ynm3k-tmp" ]; then
