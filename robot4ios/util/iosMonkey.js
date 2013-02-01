@@ -135,6 +135,6 @@ action = {
    doubleTap:false,
    shake:true,
    volumeUD:false,
-   lock:false
+   lock:true
 }
 IOSMonkey.run(action,5000,0.3);

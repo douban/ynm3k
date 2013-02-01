@@ -2,6 +2,8 @@
 #import "Tools.js"
 #import "Waiter.js"
 
+
+
 var Finder = {
 
 findElementByName: function(name,parent){
