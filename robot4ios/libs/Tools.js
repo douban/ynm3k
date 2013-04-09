@@ -7,6 +7,11 @@ function log(msg) {
     UIALogger.logMessage(msg+" ");
 }
 
+function sleep(s) {
+    var target = UIATarget.localTarget();
+    target.delay(s);
+}
+
 function setLocation(Lng,Lat){
     var target = UIATarget.localTarget();
     target.setLocation({"longitude":Lng,"latitude":Lat})

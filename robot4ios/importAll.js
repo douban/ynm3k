@@ -5,3 +5,4 @@
 #import "libs/Finder.js"
 #import "libs/Waiter.js"
 #import "libs/Tools.js"
+#import "libs/onlyTest.js"

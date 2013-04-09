@@ -1,10 +1,9 @@
-#import "Assert.js"
 #import "Tools.js"
 #import "Waiter.js"
 
-
-
 var Finder = {
+    
+    elementsArray: null,
 
 findElementByName: function(name,parent){
     Waiter.wait(1)
@@ -14,6 +13,90 @@ findElementByName: function(name,parent){
 findElementByValue: function(name,parent){
     Waiter.wait(1)
     return this.findElement_By_value(name,parent)
+},
+
+app: function(){
+    return UIATarget.localTarget().frontMostApp()
+},
+
+navigationBarLeftButton: function(){
+    return UIATarget.localTarget().frontMostApp().mainWindow().navigationBar().leftButton()
+},
+
+navigationBarRightButton: function(){
+    return UIATarget.localTarget().frontMostApp().mainWindow().navigationBar().rightButton()
+},
+
+findElementsByClassType: function(classType,parent){
+    if (!parent) {
+        parent = UIATarget.localTarget().frontMostApp();
+    }
+    elementList = new Array();
+    this.elementsArray = null;
+    this.elementsArray = new Array();
+    this._searchAllElements(parent);
+    for(var i = 0;i < this.elementsArray.length;i++){
+        if (this.elementsArray[i].toString() == "[object UIA"+classType+"]" ){
+            elementList.push(this.elementsArray[i]);
+        }
+    }
+    return elementList; 
+},
+
+findElementByNameAndClassType: function(name,classType,parent){
+    if (!parent) {
+        parent = UIATarget.localTarget().frontMostApp();
+    }
+    var result = parent.withName(name);
+    var elementList = this.findElementsByClassType(classType,parent);
+    for(var i = 0;i < telementList.length;i++){
+        if (!this.isNil(elementList[i].withName(name)) ){
+            result = elementList[i];
+            return result;
+        }
+    }
+    return result;
+},
+
+findElementsWithPredicate: function(PredicateString,parent){
+    if (!parent) {
+        parent = UIATarget.localTarget().frontMostApp();
+    }
+    var elementList = new Array();
+    this.elementsArray = null;
+    this.elementsArray = new Array();
+    this._searchAllElements(parent);
+    try {
+        UIATarget.localTarget().pushTimeout(0);
+        for(var i = 0;i < this.elementsArray.length;i++){
+            if (!this.isNil(this.elementsArray[i].withPredicate(PredicateString)) ){
+                elementList.push(this.elementsArray[i]);
+            }
+        }
+        return elementList;
+    } finally {
+        UIATarget.localTarget().popTimeout();
+    }
+},
+
+findFristElementWithPredicate:function(PredicateString,parent){
+    if (!parent) {
+        parent = UIATarget.localTarget().frontMostApp();
+    }
+    this.elementsArray = null;
+    this.elementsArray = new Array();
+    this._searchAllElements(parent);
+    try {
+        UIATarget.localTarget().pushTimeout(0);
+        for(var i = 0;i < this.elementsArray.length;i++){
+            if (!this.isNil(this.elementsArray[i].withPredicate(PredicateString)) ){
+             return this.elementsArray[i];
+            }
+         }
+    return this.elementsArray[0].withPredicate(PredicateString);
+    } finally {
+        UIATarget.localTarget().popTimeout();
+    }
 },
 
 findListChild: function(tableName,item,group){
@@ -44,11 +127,9 @@ findElement_By_name: function(name, parent){
             if(!inScreen(result)){
                 result.scrollToVisible();
            }
-            return result;		   
+            return result;
 		}
 	}
-	//UIALogger.logFail("Unable to find element named " + name);
-    //    Assert.fail("Unable to find element named " + name);
         return result;
     },
   
@@ -63,11 +144,9 @@ findElement_By_value: function(value, parent){
 		result = this._searchElements(parent, value, "value");
 		if (result.isValid()) {
                     UIATarget.localTarget().delay(0.5); 
-		   return result;		   
+		   return result;
 		}
 	}
-	//UIALogger.logFail("Unable to find element named " + name);
-    //    Assert.fail("Unable to find element value " + value);
         return result;
     },
 
@@ -75,20 +154,6 @@ isNil: function(element) {
 	return (element.toString() == "[object UIAElementNil]");
     },
     
-/*
-scrollTo_And_Get: function(tableName, item, group) {
-	var table = Finder.findElement_By_name(tableName);
-	var grp;
-	if (!group==null) {
-		grp = table.groups()[group];
-	} else {
-		grp = table.cells();
-	}
-	var itm = grp[item];
-	table.scrollToElementWithName(itm.name());
-        return itm;
-    },*/
-
 scrollTo_And_Get: function(tableName,item,group){
     var table  = Finder.findElement_By_name(tableName);
     var grp;
@@ -105,17 +170,15 @@ scrollTo_And_Get: function(tableName,item,group){
 
 _searchElements: function(elem, value, key) {
 	try {
-		UIATarget.localTarget().pushTimeout(0);		
+		UIATarget.localTarget().pushTimeout(0);
 		var result = elem.withValueForKey(value, key);
 		if (!this.isNil(result)) {
-                    
 			return result;
 		}		
-		
 		var elems = elem.elements();
 		var i;
 		for (i = 0; i < elems.length; i++) {
-			var child = elems[i];		
+			var child = elems[i];
 			result = this._searchElements(child, value, key);
 			if (!this.isNil(result)) {
 				return result;
@@ -126,4 +189,21 @@ _searchElements: function(elem, value, key) {
 		UIATarget.localTarget().popTimeout();
 	}
     },
+
+_searchAllElements: function(root) {
+    try {
+        UIATarget.localTarget().pushTimeout(0);
+        var elelist  = root.elements();
+        for (var i =0; i<elelist.length; i++) {
+            this.elementsArray.push(elelist[i])
+            if (elelist[i].elements().length!=0 && elelist[i].elements()!=null) 
+            {
+                this._searchAllElements(elelist[i])
+            }
+        }
+    } finally {
+        UIATarget.localTarget().popTimeout();
+    }
+    },
+
 }
