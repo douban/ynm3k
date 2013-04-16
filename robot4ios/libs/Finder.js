@@ -6,12 +6,12 @@ var Finder = {
     elementsArray: null,
 
 findElementByName: function(name,parent){
-    Waiter.wait(1)
+    sleep(1)
     return this.findElement_By_name(name,parent)
 },
 
 findElementByValue: function(name,parent){
-    Waiter.wait(1)
+    sleep(1)
     return this.findElement_By_value(name,parent)
 },
 
@@ -20,14 +20,17 @@ app: function(){
 },
 
 navigationBarLeftButton: function(){
+    sleep(1)
     return UIATarget.localTarget().frontMostApp().mainWindow().navigationBar().leftButton()
 },
 
 navigationBarRightButton: function(){
+    sleep(1)
     return UIATarget.localTarget().frontMostApp().mainWindow().navigationBar().rightButton()
 },
 
 findElementsByClassType: function(classType,parent){
+    sleep(1)
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -44,6 +47,7 @@ findElementsByClassType: function(classType,parent){
 },
 
 findElementByNameAndClassType: function(name,classType,parent){
+    sleep(1)
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -59,6 +63,7 @@ findElementByNameAndClassType: function(name,classType,parent){
 },
 
 findElementsWithPredicate: function(PredicateString,parent){
+    sleep(1)
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -80,6 +85,7 @@ findElementsWithPredicate: function(PredicateString,parent){
 },
 
 findFristElementWithPredicate:function(PredicateString,parent){
+    sleep(1)
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -100,7 +106,7 @@ findFristElementWithPredicate:function(PredicateString,parent){
 },
 
 findListChild: function(tableName,item,group){
-    Waiter.wait(1)
+    sleep(1)
     var table  = Finder.findElement_By_name(tableName);
     var grp;
     if( item<0 ){
@@ -108,7 +114,22 @@ findListChild: function(tableName,item,group){
     }else if ( (group==null) && (item>=0)){
         grp = table.cells()[item];
     }else{
-        grp = table.groups()[group].cells()[item];
+        var group = table.groups()[group];
+        var tableElements = table.elements();
+        var groupIndex = -1;
+        for (var i = 0; i < tableElements.length; i++) {
+            if (group.toString() == tableElements[i].toString()) {
+                log(group.name())
+                if (group.name()==tableElements[i].name()) {
+                    groupIndex = i
+                    log(i)
+                }
+            }
+        }
+        if (groupIndex != -1) {
+            grp = tableElements[groupIndex+item+1]
+            log(grp);
+        }
     }
     table.scrollToElementWithName(grp.name());
     return grp;
