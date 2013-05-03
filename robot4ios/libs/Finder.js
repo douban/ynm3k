@@ -1,6 +1,8 @@
 #import "Tools.js"
 #import "Waiter.js"
 
+
+
 var Finder = {
     
     elementsArray: null,
@@ -53,7 +55,7 @@ findElementByNameAndClassType: function(name,classType,parent){
     }
     var result = parent.withName(name);
     var elementList = this.findElementsByClassType(classType,parent);
-    for(var i = 0;i < telementList.length;i++){
+    for(var i = 0;i < elementList.length;i++){
         if (!this.isNil(elementList[i].withName(name)) ){
             result = elementList[i];
             return result;
