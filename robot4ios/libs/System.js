@@ -3,9 +3,9 @@ var System = {
 /*
 scriptPath and resultPath need to set before use it.
 */
-scriptPath:"/Users/komejun/Documents/publicgit/ynm3k/robot4ios/libs/shells/",
-resultPath:"/Users/komejun/Documents/publicgit/ynm3k/ynm3k-reports/",
-screenPath:"/Users/komejun/Documents/publicgit/ynm3k/ynm3k-tmp/",
+scriptPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/robot4ios/libs/shells/",
+resultPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/ynm3k-reports/",
+screenPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/ynm3k-tmp/",
 
 printSystemInfo: function(){
     var target = UIATarget.localTarget();
