@@ -12,6 +12,21 @@ function sleep(s) {
     target.delay(s);
 }
 
+function wait4IndicatorDis(timeout){
+    var times = timeout
+    if (timeout == null) {
+        times = 5
+    }
+    while(times >= 0){
+        var indicatorArray = Finder.findElementsByClassType('ActivityIndicator')
+        times--
+        if (indicatorArray.length == 0) {
+            break;
+        }
+        sleep(1);
+    }
+}
+
 function setLocation(Lng,Lat){
     var target = UIATarget.localTarget();
     target.setLocation({"longitude":Lng,"latitude":Lat})

@@ -1,7 +1,7 @@
 Waiter = {
-MIN_TIME: 2,
-MID_TIME: 5,
-MAX_TIME: 8,
+MIN_TIME: 1,
+MID_TIME: 3,
+MAX_TIME: 5,
 
 wait : function(times){
     var target = UIATarget.localTarget();

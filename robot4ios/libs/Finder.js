@@ -6,12 +6,14 @@ var Finder = {
     elementsArray: null,
 
 findElementByName: function(name,parent){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     return this.findElement_By_name(name,parent)
 },
 
 findElementByValue: function(name,parent){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     return this.findElement_By_value(name,parent)
 },
 
@@ -20,17 +22,20 @@ app: function(){
 },
 
 navigationBarLeftButton: function(){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     return UIATarget.localTarget().frontMostApp().mainWindow().navigationBar().leftButton()
 },
 
 navigationBarRightButton: function(){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     return UIATarget.localTarget().frontMostApp().mainWindow().navigationBar().rightButton()
 },
 
 findElementsByClassType: function(classType,parent){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -47,7 +52,8 @@ findElementsByClassType: function(classType,parent){
 },
 
 findElementByNameAndClassType: function(name,classType,parent){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -70,7 +76,8 @@ findElementByNameAndClassType: function(name,classType,parent){
 },
 
 findElementsWithPredicate: function(PredicateString,parent){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -92,7 +99,8 @@ findElementsWithPredicate: function(PredicateString,parent){
 },
 
 findFristElementWithPredicate:function(PredicateString,parent){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -113,7 +121,8 @@ findFristElementWithPredicate:function(PredicateString,parent){
 },
 
 findListChild: function(tableName,item,group){
-    sleep(Waiter.MIN_TIME)
+    wait4IndicatorDis();
+    sleep(1);
     var table  = Finder.findElement_By_name(tableName);
     var grp;
     if( item<0 ){
