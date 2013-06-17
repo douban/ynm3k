@@ -1,7 +1,6 @@
 #import "Finder.js"
 #import "Assert.js"
 #import "System.js"
-#import "Waiter.js"
 
 function log(msg) {
     UIALogger.logMessage(msg+" ");
@@ -45,7 +44,7 @@ function screenShoot(imageName,rect){
     }else{
         target.captureRectWithName(rect,imageName)
     }
-    Waiter.wait(3)
+    sleep(3)
     var host = target.host();
     var tmpname = System.screenPath+"Run 1/"+imageName+".png";
     var resultname = System.resultPath+imageName+".png";
