@@ -11,18 +11,19 @@ function sleep(s) {
     target.delay(s);
 }
 
-function wait4IndicatorDis(timeout){
-    var times = timeout
-    if (timeout == null) {
-        times = 5
-    }
-    while(times >= 0){
-        var indicatorArray = Finder.findElementsByClassType('ActivityIndicator')
-        times--
+function wait4IndicatorDis(){
+    var MaxTimeOut = 10
+    var times = MaxTimeOut
+    while(times>0) {
+        var indicatorArray = Finder._findElementsByClassType('ActivityIndicator')
         if (indicatorArray.length == 0) {
             break;
         }
         sleep(1);
+        --times
+    }
+    if (times == MaxTimeOut) {
+        sleep(1)
     }
 }
 
