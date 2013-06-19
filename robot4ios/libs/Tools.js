@@ -45,22 +45,23 @@ function screenShoot(imageName,rect){
         target.captureRectWithName(rect,imageName)
     }
     sleep(3)
-    var host = target.host();
-    var tmpname = System.screenPath+"Run 1/"+imageName+".png";
-    var resultname = System.resultPath+imageName+".png";
-    var result = host.performTaskWithPathArgumentsTimeout(System.scriptPath+"copy.sh", [tmpname,resultname], 5);
-    if(result.exitCode==0){
-        return true;
-    }
-    return false;
+    // var host = target.host();
+    // var tmpname = System.screenPath+"Run 1/"+imageName+".png";
+    // var resultname = System.resultPath+imageName+".png";
+    // var result = host.performTaskWithPathArgumentsTimeout(System.scriptPath+"copy.sh", [tmpname,resultname], 5);
+    // if(result.exitCode==0){
+    //     return true;
+    // }
+    return true;
 }
 
 function diffPNG(image1,image2){
     var target = UIATarget.localTarget();
     var host = target.host();
-    var pic1 = System.resultPath+image1+".png";
-    var pic2 = System.resultPath+image2+".png";
-    var result = host.performTaskWithPathArgumentsTimeout(System.scriptPath+"diff.sh", [pic1,pic2], 5);
+    var pic1 = "/tmp/Run 1/"+image1+".png";
+    var pic2 = "/tmp/Run 1/"+image2+".png";
+    //var result = host.performTaskWithPathArgumentsTimeout(System.scriptPath+"diff.sh", [pic1,pic2], 5);
+    var result = host.performTaskWithPathArgumentsTimeout("/usr/bin/diff", [pic1,pic2], 5);
     if(result.exitCode==0){
         return true;
     }
