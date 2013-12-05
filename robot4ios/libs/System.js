@@ -39,7 +39,7 @@ getUTABundleID: function(){
     var target = UIATarget.localTarget();
     var app = target.frontMostApp();
     return app.bundleID();
-    }
+    },
 
 createFile: function(endName){
     var target = UIATarget.localTarget(); 
@@ -54,7 +54,6 @@ createFile: function(endName){
             }
     },
     
-
 writeFile: function(filename, message,flag){
     var target = UIATarget.localTarget(); 
     var host = target.host();
