@@ -7,6 +7,7 @@ function test(title, f) {
   }
   catch (e) {
     UIALogger.logError(e.toString());
+    target.captureRectWithName(target.frontMostApp().rect(),title)
     target.logElementTree();
     UIALogger.logFail(title);
   }

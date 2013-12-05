@@ -1,6 +1,5 @@
 #import "Assert.js"
 #import "System.js"
-#import "Waiter.js"
 
 function log(msg) {
     UIALogger.logMessage(msg+" ");
@@ -9,6 +8,22 @@ function log(msg) {
 function sleep(s) {
     var target = UIATarget.localTarget();
     target.delay(s);
+}
+
+function wait4IndicatorDis(){
+    var MaxTimeOut = 10
+    var times = MaxTimeOut
+    while(times>0) {
+        var indicatorArray = Finder._findElementsByClassType('ActivityIndicator')
+        if (indicatorArray.length == 0) {
+            break;
+        }
+        sleep(1);
+        --times
+    }
+    if (times == MaxTimeOut) {
+        sleep(1)
+    }
 }
 
 function setLocation(Lng,Lat){
@@ -29,23 +44,24 @@ function screenShoot(imageName,rect){
     }else{
         target.captureRectWithName(rect,imageName)
     }
-    Waiter.wait(3)
-    var host = target.host();
-    var tmpname = System.screenPath+"Run 1/"+imageName+".png";
-    var resultname = System.resultPath+imageName+".png";
-    var result = host.performTaskWithPathArgumentsTimeout(System.scriptPath+"copy.sh", [tmpname,resultname], 5);
-    if(result.exitCode==0){
-        return true;
-    }
-    return false;
+    sleep(3)
+    // var host = target.host();
+    // var tmpname = System.screenPath+"Run 1/"+imageName+".png";
+    // var resultname = System.resultPath+imageName+".png";
+    // var result = host.performTaskWithPathArgumentsTimeout(System.scriptPath+"copy.sh", [tmpname,resultname], 5);
+    // if(result.exitCode==0){
+    //     return true;
+    // }
+    return true;
 }
 
 function diffPNG(image1,image2){
     var target = UIATarget.localTarget();
     var host = target.host();
-    var pic1 = System.resultPath+image1+".png";
-    var pic2 = System.resultPath+image2+".png";
-    var result = host.performTaskWithPathArgumentsTimeout(System.scriptPath+"diff.sh", [pic1,pic2], 5);
+    var pic1 = "/tmp/Run 1/"+image1+".png";
+    var pic2 = "/tmp/Run 1/"+image2+".png";
+    //var result = host.performTaskWithPathArgumentsTimeout(System.scriptPath+"diff.sh", [pic1,pic2], 5);
+    var result = host.performTaskWithPathArgumentsTimeout("/usr/bin/diff", [pic1,pic2], 5);
     if(result.exitCode==0){
         return true;
     }

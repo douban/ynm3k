@@ -3,9 +3,9 @@ var System = {
 /*
 scriptPath and resultPath need to set before use it.
 */
-scriptPath:"/Users/komejun/Documents/publicgit/ynm3k/robot4ios/libs/shells/",
-resultPath:"/Users/komejun/Documents/publicgit/ynm3k/ynm3k-reports/",
-screenPath:"/Users/komejun/Documents/publicgit/ynm3k/ynm3k-tmp/",
+// scriptPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/robot4ios/libs/shells/",
+// resultPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/ynm3k-reports/",
+// screenPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/ynm3k-tmp/",
 
 printSystemInfo: function(){
     var target = UIATarget.localTarget();
@@ -39,30 +39,30 @@ getUTABundleID: function(){
     var target = UIATarget.localTarget();
     var app = target.frontMostApp();
     return app.bundleID();
-    },
+    }
 
-createFile: function(endName){
-    var target = UIATarget.localTarget(); 
-    var host = target.host();
-    var str = this.resultPath+endName;
-    UIALogger.logMessage("test begin:"+str);
-    var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"createFile.sh", [str], 5);
-    if(result.exitCode==0){
-        return str;
-        }else{
-            return null;
-            }
-    },
+// createFile: function(endName){
+//     var target = UIATarget.localTarget(); 
+//     var host = target.host();
+//     var str = this.resultPath+endName;
+//     UIALogger.logMessage("test begin:"+str);
+//     var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"createFile.sh", [str], 5);
+//     if(result.exitCode==0){
+//         return str;
+//         }else{
+//             return null;
+//             }
+//     },
     
 
-writeFile: function(filename, message,flag){
-    var target = UIATarget.localTarget(); 
-    var host = target.host();
-    var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"writeFile.sh", [message,filename,flag], 5);
-    if(result.exitCode==0){
-        return true;
-        }else{
-            return false;
-            }
-    }
+// writeFile: function(filename, message,flag){
+//     var target = UIATarget.localTarget(); 
+//     var host = target.host();
+//     var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"writeFile.sh", [message,filename,flag], 5);
+//     if(result.exitCode==0){
+//         return true;
+//         }else{
+//             return false;
+//             }
+//     }
 }

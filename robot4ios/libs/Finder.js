@@ -1,17 +1,16 @@
 #import "Tools.js"
 
-
 var Finder = {
     
     elementsArray: null,
 
 findElementByName: function(name,parent){
-    sleep(1)
+    wait4IndicatorDis();
     return this.findElement_By_name(name,parent)
 },
 
 findElementByValue: function(name,parent){
-    sleep(1)
+    wait4IndicatorDis();
     return this.findElement_By_value(name,parent)
 },
 
@@ -20,17 +19,16 @@ app: function(){
 },
 
 navigationBarLeftButton: function(){
-    sleep(1)
+    wait4IndicatorDis();
     return UIATarget.localTarget().frontMostApp().mainWindow().navigationBar().leftButton()
 },
 
 navigationBarRightButton: function(){
-    sleep(1)
+    wait4IndicatorDis();
     return UIATarget.localTarget().frontMostApp().mainWindow().navigationBar().rightButton()
 },
 
-findElementsByClassType: function(classType,parent){
-    sleep(1)
+_findElementsByClassType: function(classType,parent){
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -46,12 +44,21 @@ findElementsByClassType: function(classType,parent){
     return elementList; 
 },
 
+findElementsByClassType: function(classType,parent){
+    wait4IndicatorDis();
+    return this._findElementsByClassType(classType,parent); 
+},
+
 findElementByNameAndClassType: function(name,classType,parent){
-    sleep(1)
+    wait4IndicatorDis();
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
-    var result = parent.withName(name);
+    var result
+    try {
+        UIATarget.localTarget().pushTimeout(0);
+        result = parent.withName(name);
+    
     var elementList = this.findElementsByClassType(classType,parent);
     for(var i = 0;i < elementList.length;i++){
         if (!this.isNil(elementList[i].withName(name)) ){
@@ -60,10 +67,13 @@ findElementByNameAndClassType: function(name,classType,parent){
         }
     }
     return result;
+    }finally{
+        UIATarget.localTarget().popTimeout();
+    }
 },
 
 findElementsWithPredicate: function(PredicateString,parent){
-    sleep(1)
+    wait4IndicatorDis();
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -85,7 +95,7 @@ findElementsWithPredicate: function(PredicateString,parent){
 },
 
 findFristElementWithPredicate:function(PredicateString,parent){
-    sleep(1)
+    wait4IndicatorDis();
     if (!parent) {
         parent = UIATarget.localTarget().frontMostApp();
     }
@@ -106,7 +116,7 @@ findFristElementWithPredicate:function(PredicateString,parent){
 },
 
 findListChild: function(tableName,item,group){
-    sleep(1)
+    wait4IndicatorDis();
     var table  = Finder.findElement_By_name(tableName);
     var grp;
     if( item<0 ){
@@ -145,9 +155,9 @@ findElement_By_name: function(name, parent){
 	while (((new Date()).getTime() - start) < (timeout * 1000) || timeout == 0) {
 		result = this._searchElements(parent, name, "name");
 		if (!this.isNil(result)) {
-            if(!inScreen(result)){
-                result.scrollToVisible();
-           }
+           //  if(!inScreen(result)){
+           //      result.scrollToVisible();
+           // }
             return result;
 		}
 	}
