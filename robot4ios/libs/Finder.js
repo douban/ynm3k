@@ -1,6 +1,4 @@
 #import "Tools.js"
-#import "Waiter.js"
-
 
 
 var Finder = {

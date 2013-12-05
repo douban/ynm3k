@@ -1,4 +1,3 @@
-#import "Finder.js"
 #import "Assert.js"
 #import "System.js"
 #import "Waiter.js"

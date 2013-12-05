@@ -1,10 +1,10 @@
 var target = UIATarget.localTarget(); 
-var app = target.frontMostApp();
-var appWindow = target.frontMostApp().mainWindow();
 
-target.delay(15);
+//target.setLocation({'longitude':'116.397428','latitude':'39.90923'})
 
-app.logElementTree();
+//target.setLocation({'longitude':'116.48735','latitude':'39.98816'})
+
+target.logElementTree();
 
 //var skip_but = appWindow.buttons()[appWindow.buttons().length-1];
 ////skip_but.tap();
