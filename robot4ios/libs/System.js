@@ -40,6 +40,15 @@ getUTABundleID: function(){
     var app = target.frontMostApp();
     return app.bundleID();
     },
+	
+simulateMemoryWarning: function(){
+    var result = host.performTaskWithPathArgumentsTimeout("/usr/bin/osascript", [this.scriptPath+"SMW.scpt"], 5);
+    if(result.exitCode==0){
+        return 0;
+        }else{
+         return null;
+            }
+},
 
 createFile: function(endName){
     var target = UIATarget.localTarget(); 
