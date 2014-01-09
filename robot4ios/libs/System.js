@@ -42,6 +42,8 @@ getUTABundleID: function(){
     },
 	
 simulateMemoryWarning: function(){
+    var target = UIATarget.localTarget(); 
+    var host = target.host();
     var result = host.performTaskWithPathArgumentsTimeout("/usr/bin/osascript", [this.scriptPath+"SMW.scpt"], 5);
     if(result.exitCode==0){
         return 0;
