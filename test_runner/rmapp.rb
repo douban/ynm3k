@@ -24,13 +24,11 @@ def remove_app (app_name, app_bundle_id, device="iPhone")
       bundle_company_name = app_bundle_id.delete('.' + app_bundle_id.split('.').last)
       count = `/usr/libexec/PlistBuddy -c "Print :LSVendors:BundleID\\:#{bundle_company_name}:LSApplications" "#{sim_dir}/#{item}/tmp/com.apple.lsdidentifiers.plist" | grep "#{bundle_company_name}"|wc -l`
       if count.to_i == 1
-        puts 'hoho'
         `/usr/libexec/PlistBuddy -c "Delete :LSVendors:BundleID\\:#{bundle_company_name}" "#{sim_dir}/#{item}/tmp/com.apple.lsdidentifiers.plist"`
       else
         (0..count.to_i-1).each do |i|
           one_b_id = `/usr/libexec/PlistBuddy -c "Print :LSVendors:BundleID\\:#{bundle_company_name}:LSApplications:#{i}" "#{sim_dir}/#{item}/tmp/com.apple.lsdidentifiers.plist"`
           if one_b_id == app_bundle_id
-            puts 'haha'
             `/usr/libexec/PlistBuddy -c "Delete :LSVendors:BundleID\\:#{bundle_company_name}:LSApplications:#{i}" "#{sim_dir}/#{item}/tmp/com.apple.lsdidentifiers.plist"`
             break
           end
