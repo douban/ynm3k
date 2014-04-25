@@ -35,7 +35,7 @@ def remove_app (app_name, app_bundle_id, device="iPhone")
         end
       end
 
-      puts `/usr/libexec/PlistBuddy -c "Save" "#{sim_dir}/#{item}/tmp/com.apple.lsdidentifiers.plist"`
+      `/usr/libexec/PlistBuddy -c "Save" "#{sim_dir}/#{item}/tmp/com.apple.lsdidentifiers.plist"`
     end
   end
 end
