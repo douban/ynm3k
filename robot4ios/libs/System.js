@@ -3,9 +3,9 @@ var System = {
 /*
 scriptPath and resultPath need to set before use it.
 */
-scriptPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/robot4ios/libs/shells/",
-resultPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/ynm3k-reports/",
-screenPath:"/Users/komejun/Documents/code/liuzhenfu_DoubanMovie--iOS/UITest/ynm3k/ynm3k-tmp/",
+scriptPath:"/Users/mijun/Documents/douban/publicgit/ynm3k/robot4ios/libs/shells/",
+resultPath:"/Users/mijun/Documents/douban/publicgit/ynm3k/ynm3k-reports/",
+screenPath:"/Users/mijun/Documents/douban/publicgit/ynm3k/ynm3k-tmp/",
 
 printSystemInfo: function(){
     var target = UIATarget.localTarget();
@@ -39,7 +39,7 @@ getUTABundleID: function(){
     var target = UIATarget.localTarget();
     var app = target.frontMostApp();
     return app.bundleID();
-    }
+    },
 
 createFile: function(endName){
     var target = UIATarget.localTarget(); 
@@ -49,6 +49,17 @@ createFile: function(endName){
     var result = host.performTaskWithPathArgumentsTimeout(this.scriptPath+"createFile.sh", [str], 5);
     if(result.exitCode==0){
         return str;
+        }else{
+            return null;
+            }
+    },
+
+readFile: function(fileName){
+    var target = UIATarget.localTarget(); 
+    var host = target.host();
+    var result = host.performTaskWithPathArgumentsTimeout("/bin/cat", [fileName], 5);
+    if(result.exitCode==0){
+        return result.stdout + "";
         }else{
             return null;
             }

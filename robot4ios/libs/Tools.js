@@ -2,7 +2,7 @@
 #import "System.js"
 
 function log(msg) {
-    UIALogger.logMessage(msg+" ");
+    UIALogger.logMessage(msg+"");
 }
 
 function sleep(s) {
