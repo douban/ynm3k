@@ -41,6 +41,17 @@ getUTABundleID: function(){
     return app.bundleID();
     },
 
+simulateMemoryWarning: function(){
+    var target = UIATarget.localTarget(); 
+    var host = target.host();
+    var result = host.performTaskWithPathArgumentsTimeout("/usr/bin/osascript", [this.scriptPath+"SMW.scpt"], 5);
+    if(result.exitCode==0){
+        return 0;
+        }else{
+         return null;
+            }
+},
+
 createFile: function(endName){
     var target = UIATarget.localTarget(); 
     var host = target.host();
@@ -65,7 +76,6 @@ readFile: function(fileName){
             }
     },
     
-
 writeFile: function(filename, message,flag){
     var target = UIATarget.localTarget(); 
     var host = target.host();
